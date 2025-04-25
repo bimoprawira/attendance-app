@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Leave Request Management')
+
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="py-8">
@@ -63,9 +65,9 @@
                                 <div class="text-sm text-gray-900 whitespace-pre-line">{{ $leave->reason }}</div>
                             </td>
                             <td class="px-4 py-4">
-                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                    {{ $leave->status === 'approved' ? 'bg-green-100 text-green-800' : 
-                                       ($leave->status === 'rejected' ? 'bg-red-100 text-red-800' : 
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                    {{ $leave->status === 'approved' ? 'bg-green-100 text-green-800' :
+                                       ($leave->status === 'rejected' ? 'bg-red-100 text-red-800' :
                                        'bg-yellow-100 text-yellow-800') }}">
                                     {{ ucfirst($leave->status) }}
                                 </span>
@@ -75,14 +77,14 @@
                                     <div class="flex gap-2">
                                         <form method="POST" action="{{ route('admin.leaves.approve', $leave->leave_id) }}">
                                             @csrf
-                                            <button type="submit" 
+                                            <button type="submit"
                                                 class="px-4 py-1.5 bg-green-100 text-green-600 hover:bg-green-200 rounded-lg font-medium transition duration-150 ease-in-out">
                                                 Approve
                                             </button>
                                         </form>
                                         <form method="POST" action="{{ route('admin.leaves.reject', $leave->leave_id) }}">
                                             @csrf
-                                            <button type="submit" 
+                                            <button type="submit"
                                                 class="px-4 py-1.5 bg-red-100 text-red-600 hover:bg-red-200 rounded-lg font-medium transition duration-150 ease-in-out">
                                                 Reject
                                             </button>
@@ -109,4 +111,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

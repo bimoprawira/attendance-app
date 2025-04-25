@@ -5,15 +5,15 @@
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-2xl font-bold text-gray-800">Admin Dashboard</h2>
         <div class="flex space-x-4">
-            <a href="{{ route('admin.dashboard') }}" 
+            <a href="{{ route('admin.dashboard') }}"
                class="px-4 py-2 rounded {{ request()->routeIs('admin.dashboard') ? 'bg-blue-500 text-white' : 'text-blue-500 hover:bg-blue-100' }}">
                 Dashboard
             </a>
-            <a href="{{ route('admin.employees') }}" 
+            <a href="{{ route('admin.employees') }}"
                class="px-4 py-2 rounded {{ request()->routeIs('admin.employees') ? 'bg-blue-500 text-white' : 'text-blue-500 hover:bg-blue-100' }}">
                 Employees
             </a>
-            <a href="{{ route('admin.leaves.index') }}" 
+            <a href="{{ route('admin.leaves.index') }}"
                class="px-4 py-2 rounded {{ request()->routeIs('admin.leaves.*') ? 'bg-blue-500 text-white' : 'text-blue-500 hover:bg-blue-100' }}">
                 Leaves
             </a>
@@ -49,7 +49,7 @@
             <h3 class="text-lg font-semibold text-gray-700">Recent Leave Requests</h3>
             <a href="{{ route('admin.leaves.index') }}" class="text-blue-500 hover:text-blue-700">View All</a>
         </div>
-        
+
         @if($recentLeaves->count() > 0)
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -75,8 +75,8 @@
                                     <div class="text-sm text-gray-500">{{ $leave->duration }} days</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                        @if($leave->approval_status === 'approved') bg-green-100 text-green-800 
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                                        @if($leave->approval_status === 'approved') bg-green-100 text-green-800
                                         @elseif($leave->approval_status === 'rejected') bg-red-100 text-red-800
                                         @else bg-yellow-100 text-yellow-800 @endif">
                                         {{ ucfirst($leave->approval_status) }}
@@ -106,4 +106,4 @@
         @endif
     </div>
 </div>
-@endsection 
+@endsection

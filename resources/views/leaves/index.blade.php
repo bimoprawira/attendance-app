@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Leave Requests')
+
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-4xl mx-auto">
@@ -53,7 +55,7 @@
 
             <!-- Request Leave Button -->
             <div class="flex justify-end mb-6">
-                <a href="{{ route('leaves.create') }}" 
+                <a href="{{ route('leaves.create') }}"
                    class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                     Request Leave
                 </a>
@@ -88,7 +90,7 @@
                                     </span>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <button onclick="showLeaveDetails({{ $leave->leave_id }})" 
+                                    <button onclick="showLeaveDetails({{ $leave->leave_id }})"
                                             class="text-blue-600 hover:text-blue-900">
                                         View Details
                                     </button>
@@ -177,4 +179,4 @@
     });
 </script>
 @endpush
-@endsection 
+@endsection

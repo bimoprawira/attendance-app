@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Login')
+
 @section('content')
 <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full">
@@ -22,8 +24,8 @@
                     <div>
                         <label for="login" class="block text-sm font-medium text-gray-700">Email or Username</label>
                         <div class="mt-1">
-                            <input id="login" name="login" type="text" required 
-                                class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('login') border-red-500 @enderror" 
+                            <input id="login" name="login" type="text" required
+                                class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('login') border-red-500 @enderror"
                                 placeholder="Enter your email or username"
                                 value="{{ old('login') }}">
                         </div>
@@ -35,8 +37,8 @@
                     <div>
                         <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
                         <div class="mt-1">
-                            <input id="password" name="password" type="password" required 
-                                class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('password') border-red-500 @enderror" 
+                            <input id="password" name="password" type="password" required
+                                class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm @error('password') border-red-500 @enderror"
                                 placeholder="Enter your password">
                         </div>
                         @error('password')
@@ -46,17 +48,17 @@
                 </div>
 
                 <div>
-                    <button type="submit" 
+                    <button type="submit"
                         class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
                         Sign in
                     </button>
                 </div>
             </form>
         </div>
-        
+
         <div class="mt-6 text-center text-sm text-gray-500">
             A complete solution for HR and attendance management
         </div>
     </div>
 </div>
-@endsection 
+@endsection

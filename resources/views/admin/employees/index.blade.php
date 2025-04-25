@@ -1,11 +1,13 @@
 @extends('layouts.app')
 
+@section('title', 'Employee Management')
+
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
     <h2 class="text-2xl font-bold text-gray-800 mb-6">Employees Management</h2>
-    
+
     <div class="flex justify-end mb-6">
-        <button onclick="openAddEmployeeModal()" 
+        <button onclick="openAddEmployeeModal()"
                 class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2.5 px-4 rounded-lg inline-flex items-center transition duration-150 ease-in-out">
             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -277,17 +279,17 @@ function deleteEmployee(id) {
         const form = document.createElement('form');
         form.method = 'POST';
         form.action = `/admin/employees/${id}`;
-        
+
         const csrfToken = document.createElement('input');
         csrfToken.type = 'hidden';
         csrfToken.name = '_token';
         csrfToken.value = document.querySelector('meta[name="csrf-token"]').content;
-        
+
         const method = document.createElement('input');
         method.type = 'hidden';
         method.name = '_method';
         method.value = 'DELETE';
-        
+
         form.appendChild(csrfToken);
         form.appendChild(method);
         document.body.appendChild(form);
@@ -296,4 +298,4 @@ function deleteEmployee(id) {
 }
 </script>
 
-@endsection 
+@endsection
