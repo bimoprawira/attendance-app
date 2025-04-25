@@ -14,11 +14,11 @@
                 <div class="bg-blue-50 rounded-lg p-6">
                     <h3 class="text-lg font-semibold text-blue-800 mb-4">Attendance</h3>
                     <div class="space-y-4">
-                        <a href="{{ route('presence.index') }}"
+                        <a href="{{ route('presence.index') }}" 
                            class="block w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded text-center">
                             Check Attendance
                         </a>
-                        <a href="{{ route('presence.history') }}"
+                        <a href="{{ route('presence.history') }}" 
                            class="block w-full bg-blue-100 hover:bg-blue-200 text-blue-700 font-medium py-2 px-4 rounded text-center">
                             View History
                         </a>
@@ -29,11 +29,11 @@
                 <div class="bg-green-50 rounded-lg p-6">
                     <h3 class="text-lg font-semibold text-green-800 mb-4">Leave Management</h3>
                     <div class="space-y-4">
-                        <a href="{{ route('leaves.create') }}"
+                        <a href="{{ route('leaves.create') }}" 
                            class="block w-full bg-green-500 hover:bg-green-600 text-white font-medium py-2 px-4 rounded text-center">
                             Request Leave
                         </a>
-                        <a href="{{ route('leaves.index') }}"
+                        <a href="{{ route('leaves.index') }}" 
                            class="block w-full bg-green-100 hover:bg-green-200 text-green-700 font-medium py-2 px-4 rounded text-center">
                             View Requests
                         </a>
@@ -57,7 +57,7 @@
                 <div class="flex flex-wrap gap-4">
                     <form action="{{ route('logout') }}" method="POST" class="inline">
                         @csrf
-                        <button type="submit"
+                        <button type="submit" 
                                 class="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                             Logout
                         </button>
@@ -67,4 +67,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection 

@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Dashboard')
-
 @section('content')
 <div class="container mx-auto px-6 py-7">
     <div class="max-w-[1200px] mx-auto bg-white rounded-lg shadow-lg p-7">
@@ -13,11 +11,11 @@
             <div class="bg-blue-50 rounded-lg p-[1.4rem]">
                 <h2 class="text-lg font-semibold text-blue-700 mb-4">Attendance</h2>
                 <div class="space-y-4">
-                    <a href="{{ route('presence.index') }}"
+                    <a href="{{ route('presence.index') }}" 
                         class="block w-full bg-blue-500 hover:bg-blue-600 text-white text-center py-[0.7rem] px-[1.4rem] rounded text-base">
                         Check Attendance
                     </a>
-                    <a href="{{ route('presence.history') }}"
+                    <a href="{{ route('presence.history') }}" 
                         class="block w-full bg-blue-100 hover:bg-blue-200 text-blue-700 text-center py-[0.7rem] px-[1.4rem] rounded text-base">
                         View History
                     </a>
@@ -28,11 +26,11 @@
             <div class="bg-green-50 rounded-lg p-[1.4rem]">
                 <h2 class="text-lg font-semibold text-green-700 mb-4">Leave Management</h2>
                 <div class="space-y-4">
-                    <a href="{{ route('leaves.create') }}"
+                    <a href="{{ route('leaves.create') }}" 
                         class="block w-full bg-green-500 hover:bg-green-600 text-white text-center py-[0.7rem] px-[1.4rem] rounded text-base">
                         Request Leave
                     </a>
-                    <a href="{{ route('leaves.index') }}"
+                    <a href="{{ route('leaves.index') }}" 
                         class="block w-full bg-green-100 hover:bg-green-200 text-green-700 text-center py-[0.7rem] px-[1.4rem] rounded text-base">
                         View Requests
                     </a>
@@ -54,21 +52,6 @@
                     </p>
                 </div>
             </div>
-
-            <!-- Payroll Section -->
-            <div class="bg-yellow-50 rounded-lg p-[1.4rem]">
-                <h2 class="text-lg font-semibold text-yellow-700 mb-4">Payroll</h2>
-                <div class="space-y-4">
-                    <a href="{{ route('gaji.index') }}"
-                        class="block w-full bg-yellow-500 hover:bg-yellow-600 text-white text-center py-[0.7rem] px-[1.4rem] rounded text-base">
-                        View Salary History
-                    </a>
-                    <a href="{{ route('gaji.export') }}"
-                        class="block w-full bg-yellow-100 hover:bg-yellow-200 text-yellow-700 text-center py-[0.7rem] px-[1.4rem] rounded text-base">
-                        Download Salary History (Excel)
-                    </a>
-                </div>
-            </div>
         </div>
 
         <!-- Quick Actions -->
@@ -76,7 +59,7 @@
             <h2 class="text-lg font-semibold text-gray-800 mb-4">Quick Actions</h2>
             <form method="POST" action="{{ route('logout') }}" class="inline">
                 @csrf
-                <button type="submit"
+                <button type="submit" 
                     class="bg-red-500 hover:bg-red-600 text-white font-medium py-[0.7rem] px-[1.8rem] rounded text-base">
                     Logout
                 </button>
@@ -84,4 +67,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection 

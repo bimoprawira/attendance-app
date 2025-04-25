@@ -1,7 +1,5 @@
 @extends('layouts.app')
 
-@section('title', 'Attendance')
-
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-3xl mx-auto">
@@ -35,7 +33,7 @@
                             <span class="text-sm font-semibold text-blue-600">{{ $formOpenTime }}</span>
                         </div>
                     </div>
-
+                    
                     <!-- Present -->
                     <div class="flex items-center">
                         <div class="w-32 flex-shrink-0">
@@ -45,7 +43,7 @@
                             <span class="text-sm font-semibold text-green-600">Check-in before {{ $presentBefore }}</span>
                         </div>
                     </div>
-
+                    
                     <!-- Late -->
                     <div class="flex items-center">
                         <div class="w-32 flex-shrink-0">
@@ -55,7 +53,7 @@
                             <span class="text-sm font-semibold text-yellow-600">Check-in between {{ $presentBefore }} and {{ $lateBefore }}</span>
                         </div>
                     </div>
-
+                    
                     <!-- Absent -->
                     <div class="flex items-center">
                         <div class="w-32 flex-shrink-0">
@@ -143,7 +141,7 @@
                     @else
                         <form action="{{ route('presence.checkIn') }}" method="POST">
                             @csrf
-                            <button type="submit"
+                            <button type="submit" 
                                     class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
                                 Check In
                             </button>
@@ -152,7 +150,7 @@
                 @elseif(!$presence->check_out && in_array($status, ['present', 'late']))
                     <form action="{{ route('presence.checkOut') }}" method="POST">
                         @csrf
-                        <button type="submit"
+                        <button type="submit" 
                                 class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2">
                             Check Out
                         </button>
@@ -163,7 +161,7 @@
             </div>
 
             <div class="mt-8">
-                <a href="{{ route('presence.history') }}"
+                <a href="{{ route('presence.history') }}" 
                    class="text-blue-500 hover:text-blue-600 font-medium">
                     View Attendance History →
                 </a>
@@ -175,14 +173,14 @@
 <script>
 function updateClock() {
     const now = new Date();
-
+    
     // Format time
     const hours = now.getHours();
     const minutes = String(now.getMinutes()).padStart(2, '0');
     const seconds = String(now.getSeconds()).padStart(2, '0');
     const ampm = hours >= 12 ? 'PM' : 'AM';
     const displayHours = String(hours % 12 || 12).padStart(2, '0');
-
+    
     // Format date
     const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -202,4 +200,4 @@ updateClock();
 setInterval(updateClock, 1000);
 </script>
 
-@endsection
+@endsection 
