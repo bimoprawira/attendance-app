@@ -5,13 +5,13 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="py-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Employee Attendances</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Absensi Karyawan</h2>
 
         <!-- Filters -->
         <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
             <div class="flex flex-wrap items-center gap-4">
                 <div class="flex-1 min-w-[200px]">
-                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Date</label>
+                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
                     <input type="date"
                            id="date"
                            name="date"
@@ -25,12 +25,12 @@
                     <select id="status"
                             name="status"
                             class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option value="">All Status</option>
-                        <option value="present" {{ request('status') === 'present' ? 'selected' : '' }}>Present</option>
-                        <option value="late" {{ request('status') === 'late' ? 'selected' : '' }}>Late</option>
-                        <option value="absent" {{ request('status') === 'absent' ? 'selected' : '' }}>Absent</option>
-                        <option value="on_leave" {{ request('status') === 'on_leave' ? 'selected' : '' }}>On Leave</option>
-                        <option value="not_checked_in" {{ request('status') === 'not_checked_in' ? 'selected' : '' }}>Not Checked In</option>
+                        <option value="">Semua Status</option>
+                        <option value="present" {{ request('status') === 'present' ? 'selected' : '' }}>Hadir</option>
+                        <option value="late" {{ request('status') === 'late' ? 'selected' : '' }}>Terlambat </option>
+                        <option value="absent" {{ request('status') === 'absent' ? 'selected' : '' }}>Tidak Hadir</option>
+                        <option value="on_leave" {{ request('status') === 'on_leave' ? 'selected' : '' }}>Cuti</option>
+                        <option value="not_checked_in" {{ request('status') === 'not_checked_in' ? 'selected' : '' }}>Belum Hadir</option>
                     </select>
                 </div>
 
@@ -38,7 +38,7 @@
                     <button type="button"
                             onclick="applyFilters()"
                             class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Apply Filters
+                        Terapkan Filter
                     </button>
                 </div>
             </div>
@@ -50,10 +50,10 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Employee</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check In</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check Out</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Karyawan</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Absen Masuk</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Absen Keluar</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                         </tr>
                     </thead>
@@ -97,7 +97,7 @@
                                             @elseif($attendance->status === 'not_checked_in') bg-gray-100 text-gray-800
                                             @else bg-red-100 text-red-800 @endif">
                                             @if($attendance->status === 'not_checked_in')
-                                                Not Checked In
+                                                Belum Absen Masuk
                                             @else
                                                 {{ ucfirst($attendance->status) }}
                                             @endif

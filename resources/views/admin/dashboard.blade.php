@@ -5,30 +5,30 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="py-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Admin Dashboard</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Beranda Admin</h2>
 
         <!-- Employees Attendance Section -->
         <div class="mb-8">
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Employees Attendance</h3>
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Absensi Karyawan</h3>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
                 <div class="bg-white rounded-lg shadow-md p-5">
-                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Total Employees</h4>
+                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Total Karyawan</h4>
                     <p class="text-3xl font-bold text-blue-600">{{ $totalEmployees }}</p>
                 </div>
                 <div class="bg-white rounded-lg shadow-md p-5">
-                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Present Today</h4>
+                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Hadir Hari Ini</h4>
                     <p class="text-3xl font-bold text-green-600">{{ $todayPresent }}</p>
                 </div>
                 <div class="bg-white rounded-lg shadow-md p-5">
-                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Late Today</h4>
+                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Terlambat Hari Ini</h4>
                     <p class="text-3xl font-bold text-yellow-600">{{ $todayLate }}</p>
                 </div>
                 <div class="bg-white rounded-lg shadow-md p-5">
-                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Absent Today</h4>
+                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Tidak Hadir Hari Ini</h4>
                     <p class="text-3xl font-bold text-red-600">{{ $todayAbsent }}</p>
                 </div>
                 <div class="bg-white rounded-lg shadow-md p-5">
-                    <h4 class="text-sm font-semibold text-gray-600 mb-2">On Leave</h4>
+                    <h4 class="text-sm font-semibold text-gray-600 mb-2">Cuti</h4>
                     <p class="text-3xl font-bold text-purple-600">{{ $todayOnLeave }}</p>
                 </div>
             </div>
@@ -37,8 +37,8 @@
         <!-- Recent Attendances -->
         <div class="bg-white rounded-lg shadow-md p-5 mb-6">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-700">Recent Attendances</h3>
-                <a href="{{ route('admin.attendance.index') }}" class="text-blue-500 hover:text-blue-700">View All</a>
+                <h3 class="text-lg font-semibold text-gray-700">Absensi Terbaru</h3>
+                <a href="{{ route('admin.attendance.index') }}" class="text-blue-500 hover:text-blue-700">Lihat Semua</a>
             </div>
 
             @if($recentAttendances->count() > 0)
@@ -46,10 +46,10 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Employee</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Check In</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Check Out</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Karyawan</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Absensi Masuk</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Absensi Keluar</th>
                                 <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                             </tr>
                         </thead>
@@ -86,7 +86,7 @@
                                             @elseif($attendance->status === 'not_checked_in') bg-gray-100 text-gray-800
                                             @else bg-red-100 text-red-800 @endif">
                                             @if($attendance->status === 'on_leave' || (isset($attendance->is_on_leave) && $attendance->is_on_leave))
-                                                On Leave
+                                                Cuti
                                             @elseif($attendance->status === 'not_checked_in')
                                                 Not Checked In
                                             @else
@@ -100,29 +100,29 @@
                     </table>
                 </div>
             @else
-                <p class="text-gray-500">No recent attendances.</p>
+                <p class="text-gray-500">Belum Ada Absensi Terbaru.</p>
             @endif
         </div>
 
         <!-- Leave Requests Section -->
         <div class="mb-6">
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Leave Requests</h3>
+            <h3 class="text-lg font-semibold text-gray-700 mb-4">Permintaan Cuti</h3>
             <div class="bg-white rounded-lg shadow-md p-5">
                 <div class="flex justify-between items-center mb-4">
                     <div>
-                        <h4 class="text-sm font-semibold text-gray-600 mb-1">Pending Leaves</h4>
+                        <h4 class="text-sm font-semibold text-gray-600 mb-1">Cuti Tertunda</h4>
                         <p class="text-3xl font-bold text-yellow-600">{{ $pendingLeaves }}</p>
                     </div>
-                    <a href="{{ route('admin.leaves.index') }}" class="text-blue-500 hover:text-blue-700">View All</a>
+                    <a href="{{ route('admin.leaves.index') }}" class="text-blue-500 hover:text-blue-700">Lihat Semua</a>
                 </div>
             </div>
         </div>
 
-        <!-- Recent Leave Requests -->
+        <!-- Permintaan Cuti Terbaru -->
         <div class="bg-white rounded-lg shadow-md p-5 mb-6">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-700">Recent Leave Requests</h3>
-                <a href="{{ route('admin.leaves.index') }}" class="text-blue-500 hover:text-blue-700">View All</a>
+                <h3 class="text-lg font-semibold text-gray-700">Permintaan Cuti Terbaru</h3>
+                <a href="{{ route('admin.leaves.index') }}" class="text-blue-500 hover:text-blue-700">Lihat Semua</a>
             </div>
 
             @if($recentLeaves->count() > 0)
@@ -130,10 +130,10 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Employee</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Type</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Dates</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Duration</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Karyawan</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Jenis</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Tanggal</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Durasi</th>
                                 <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                             </tr>
                         </thead>
@@ -161,15 +161,15 @@
                     </table>
                 </div>
             @else
-                <p class="text-gray-500">No recent leave requests.</p>
+                <p class="text-gray-500">Belum Ada Permintaan Cuti Terbaru.</p>
             @endif
         </div>
 
         <!-- Recent Payroll -->
         <div class="bg-white rounded-lg shadow-md p-5">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="text-lg font-semibold text-gray-700">Recent Payroll</h3>
-                <a href="{{ route('admin.gaji.index') }}" class="text-blue-500 hover:text-blue-700">View All</a>
+                <h3 class="text-lg font-semibold text-gray-700">Gaji Terbaru</h3>
+                <a href="{{ route('admin.gaji.index') }}" class="text-blue-500 hover:text-blue-700">Lihat Semua</a>
             </div>
 
             @if($recentPayrolls->count() > 0)
@@ -177,8 +177,8 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Employee</th>
-                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Periode</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Karyawan</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Periode Gaji</th>
                                 <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total Gaji</th>
                             </tr>
                         </thead>
@@ -199,7 +199,7 @@
                     </table>
                 </div>
             @else
-                <p class="text-gray-500">No recent payrolls.</p>
+                <p class="text-gray-500">Belum Ada Gaji Terbarus.</p>
             @endif
         </div>
     </div>

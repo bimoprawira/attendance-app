@@ -27,7 +27,7 @@
                             <div class="flex-shrink-0 flex items-center">
                                 <a href="{{ Auth::guard('admin')->check() ? route('admin.dashboard') : route('dashboard') }}"
                                    class="text-xl font-bold text-blue-600">
-                                    Attendance App
+                                    Aplikasi Kehadiran
                                 </a>
                             </div>
 
@@ -36,40 +36,40 @@
                                 @if(Auth::guard('admin')->check())
                                     <a href="{{ route('admin.dashboard') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('admin.dashboard') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Dashboard
+                                        Beranda
                                     </a>
                                     <a href="{{ route('admin.employees') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('admin.employees') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Employees
+                                        Karyawan
                                     </a>
                                     <a href="{{ route('admin.attendance.index') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('admin.attendance.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Attendances
+                                        Kehadiran
                                     </a>
                                     <a href="{{ route('admin.leaves.index') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('admin.leaves.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Leave Requests
+                                        Permintaan Cuti
                                     </a>
                                     <a href="{{ route('admin.gaji.index') }}"
                                         class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('admin.gaji.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Payroll
+                                        Gaji
                                     </a>
                                 @else
                                     <a href="{{ route('dashboard') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('dashboard') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Dashboard
+                                        Beranda
                                     </a>
                                     <a href="{{ route('presence.index') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('presence.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Attendance
+                                        Kehadiran
                                     </a>
                                     <a href="{{ route('leaves.index') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('leaves.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Leave Requests
+                                        Permintaan Cuti
                                     </a>
                                     <a href="{{ route('gaji.index') }}"
                                         class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('gaji.index') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
-                                        Payroll
+                                        Gaji
                                     </a>
                                 @endif
                             </div>
@@ -94,7 +94,7 @@
                                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                                     </svg>
-                                    Logout
+                                    Keluar
                                 </button>
                             </form>
                         </div>

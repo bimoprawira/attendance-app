@@ -47,16 +47,16 @@ Route::middleware(['auth'])->group(function () {
 // Admin routes
 Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'adminDashboard'])->name('dashboard');
-    
+
     // Employee management
     Route::get('/employees', [AdminController::class, 'employees'])->name('employees');
     Route::post('/employees', [AdminController::class, 'storeEmployee'])->name('employees.store');
     Route::put('/employees/{id}', [AdminController::class, 'updateEmployee'])->name('employees.update');
     Route::delete('/employees/{id}', [AdminController::class, 'deleteEmployee'])->name('employees.delete');
-    
+
     // Attendance management
     Route::get('/attendance', [App\Http\Controllers\Admin\AttendanceController::class, 'index'])->name('attendance.index');
-    
+
     // Leave management
     Route::get('/leaves', [App\Http\Controllers\Admin\LeaveController::class, 'index'])->name('leaves.index');
     Route::post('/leaves/{leave}/approve', [App\Http\Controllers\Admin\LeaveController::class, 'approve'])->name('leaves.approve');

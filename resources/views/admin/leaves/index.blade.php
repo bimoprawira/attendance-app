@@ -5,7 +5,7 @@
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="py-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Leave Requests</h2>
+        <h2 class="text-2xl font-bold text-gray-800 mb-6">Daftar Permintaan Cuti</h2>
 
         @if(session('success'))
             <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg mb-6" role="alert">
@@ -23,13 +23,13 @@
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64">Employee</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Type</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Duration</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">Dates</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reason</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-64">Pegawai</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Jenis</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Durasi</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-32">Tanggal</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Alasan</th>
                         <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-24">Status</th>
-                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48">Actions</th>
+                        <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-48">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -56,7 +56,7 @@
                                 </span>
                             </td>
                             <td class="px-4 py-4 text-sm text-gray-500">
-                                {{ $leave->duration }} days
+                                {{ $leave->duration }} hari
                             </td>
                             <td class="px-4 py-4 text-sm text-gray-500">
                                 {{ $leave->start_date->format('M d') }} - {{ $leave->end_date->format('M d') }}
@@ -79,26 +79,26 @@
                                             @csrf
                                             <button type="submit"
                                                 class="px-4 py-1.5 bg-green-100 text-green-600 hover:bg-green-200 rounded-lg font-medium transition duration-150 ease-in-out">
-                                                Approve
+                                                Setujui
                                             </button>
                                         </form>
                                         <form method="POST" action="{{ route('admin.leaves.reject', $leave->leave_id) }}">
                                             @csrf
                                             <button type="submit"
                                                 class="px-4 py-1.5 bg-red-100 text-red-600 hover:bg-red-200 rounded-lg font-medium transition duration-150 ease-in-out">
-                                                Reject
+                                                Tolak
                                             </button>
                                         </form>
                                     </div>
                                 @else
-                                    <span class="text-gray-500">Processed</span>
+                                    <span class="text-gray-500">Diproses</span>
                                 @endif
                             </td>
                         </tr>
                     @empty
                         <tr>
                             <td colspan="7" class="px-4 py-4 text-center text-sm text-gray-500">
-                                No leave requests found.
+                                Belum ada daftar permintaan cuti.
                             </td>
                         </tr>
                     @endforelse

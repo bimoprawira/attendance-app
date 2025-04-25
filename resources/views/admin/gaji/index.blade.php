@@ -4,7 +4,12 @@
 
 @section('content')
 <div class="max-w-6xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold text-gray-800 mb-6">Daftar Gaji</h2>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800">Daftar Gaji</h2>
+        <a href="{{ route('admin.gaji.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white font-medium px-4 py-2 rounded">
+            + Tambah Gaji
+        </a>
+    </div>
 
     @if(session('success'))
         <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
@@ -44,7 +49,7 @@
 
         <div class="mt-4">
             <a href="{{ route('gaji.export') }}" class="bg-green-600 hover:bg-green-700 text-white font-medium px-4 py-2 rounded">
-                Download Excel
+                Unduh File Excel
             </a>
         </div>
     @else
