@@ -54,6 +54,21 @@
                     </p>
                 </div>
             </div>
+
+            <!-- Payroll Section -->
+            <div class="bg-yellow-50 rounded-lg p-[1.4rem]">
+                <h2 class="text-lg font-semibold text-yellow-700 mb-4">Payroll</h2>
+                <div class="space-y-4">
+                    <a href="{{ route('gaji.index') }}"
+                        class="block w-full bg-yellow-500 hover:bg-yellow-600 text-white text-center py-[0.7rem] px-[1.4rem] rounded text-base">
+                        View Salary History
+                    </a>
+                    <a href="{{ route('gaji.export') }}"
+                        class="block w-full bg-yellow-100 hover:bg-yellow-200 text-yellow-700 text-center py-[0.7rem] px-[1.4rem] rounded text-base">
+                        Download Salary History (Excel)
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- Quick Actions -->

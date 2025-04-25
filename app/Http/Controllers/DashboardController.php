@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Presence;
 use App\Models\Leave;
+use App\Models\Gaji; // <--- Tambahan import
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
@@ -167,6 +168,13 @@ class DashboardController extends Controller
             return $attendance->updated_at ?? Carbon::now();
         })->values()->take(5);
 
+        // ==== Tambahan untuk recentPayrolls ====
+        $recentPayrolls = Gaji::with('employee')
+            ->orderBy('created_at', 'desc')
+            ->take(5)
+            ->get();
+        // ========================================
+
         return view('admin.dashboard', compact(
             'totalEmployees',
             'todayPresent',
@@ -175,7 +183,8 @@ class DashboardController extends Controller
             'todayOnLeave',
             'pendingLeaves',
             'recentLeaves',
-            'recentAttendances'
+            'recentAttendances',
+            'recentPayrolls' // <-- tambahan disini
         ));
     }
 }

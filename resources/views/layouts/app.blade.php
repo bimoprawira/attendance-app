@@ -50,6 +50,10 @@
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('admin.leaves.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
                                         Leave Requests
                                     </a>
+                                    <a href="{{ route('admin.gaji.index') }}"
+                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('admin.gaji.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
+                                        Payroll
+                                    </a>
                                 @else
                                     <a href="{{ route('dashboard') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('dashboard') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
@@ -62,6 +66,10 @@
                                     <a href="{{ route('leaves.index') }}"
                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('leaves.*') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
                                         Leave Requests
+                                    </a>
+                                    <a href="{{ route('gaji.index') }}"
+                                        class="inline-flex items-center px-1 pt-1 border-b-2 {{ request()->routeIs('gaji.index') ? 'border-blue-500 text-gray-900' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300' }} text-sm font-medium leading-5 transition duration-150 ease-in-out">
+                                        Payroll
                                     </a>
                                 @endif
                             </div>

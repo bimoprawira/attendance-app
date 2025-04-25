@@ -15,22 +15,18 @@
                     <h4 class="text-sm font-semibold text-gray-600 mb-2">Total Employees</h4>
                     <p class="text-3xl font-bold text-blue-600">{{ $totalEmployees }}</p>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-5">
                     <h4 class="text-sm font-semibold text-gray-600 mb-2">Present Today</h4>
                     <p class="text-3xl font-bold text-green-600">{{ $todayPresent }}</p>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-5">
                     <h4 class="text-sm font-semibold text-gray-600 mb-2">Late Today</h4>
                     <p class="text-3xl font-bold text-yellow-600">{{ $todayLate }}</p>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-5">
                     <h4 class="text-sm font-semibold text-gray-600 mb-2">Absent Today</h4>
                     <p class="text-3xl font-bold text-red-600">{{ $todayAbsent }}</p>
                 </div>
-
                 <div class="bg-white rounded-lg shadow-md p-5">
                     <h4 class="text-sm font-semibold text-gray-600 mb-2">On Leave</h4>
                     <p class="text-3xl font-bold text-purple-600">{{ $todayOnLeave }}</p>
@@ -123,7 +119,7 @@
         </div>
 
         <!-- Recent Leave Requests -->
-        <div class="bg-white rounded-lg shadow-md p-5">
+        <div class="bg-white rounded-lg shadow-md p-5 mb-6">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="text-lg font-semibold text-gray-700">Recent Leave Requests</h3>
                 <a href="{{ route('admin.leaves.index') }}" class="text-blue-500 hover:text-blue-700">View All</a>
@@ -148,15 +144,9 @@
                                         <div class="text-sm font-medium text-gray-900">{{ $leave->employee->name }}</div>
                                         <div class="text-sm text-gray-500">{{ $leave->employee->email }}</div>
                                     </td>
-                                    <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-500">
-                                        {{ ucfirst($leave->type) }}
-                                    </td>
-                                    <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $leave->start_date->format('M d') }} - {{ $leave->end_date->format('M d') }}
-                                    </td>
-                                    <td class="px-3 py-3 whitespace-nowrap text-sm text-gray-500">
-                                        {{ $leave->duration }} days
-                                    </td>
+                                    <td class="px-3 py-3 text-sm text-gray-500">{{ ucfirst($leave->type) }}</td>
+                                    <td class="px-3 py-3 text-sm text-gray-500">{{ $leave->start_date->format('M d') }} - {{ $leave->end_date->format('M d') }}</td>
+                                    <td class="px-3 py-3 text-sm text-gray-500">{{ $leave->duration }} days</td>
                                     <td class="px-3 py-3 whitespace-nowrap">
                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
                                             @if($leave->status === 'approved') bg-green-100 text-green-800
@@ -172,6 +162,44 @@
                 </div>
             @else
                 <p class="text-gray-500">No recent leave requests.</p>
+            @endif
+        </div>
+
+        <!-- Recent Payroll -->
+        <div class="bg-white rounded-lg shadow-md p-5">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-lg font-semibold text-gray-700">Recent Payroll</h3>
+                <a href="{{ route('admin.gaji.index') }}" class="text-blue-500 hover:text-blue-700">View All</a>
+            </div>
+
+            @if($recentPayrolls->count() > 0)
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Employee</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Periode</th>
+                                <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 uppercase">Total Gaji</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @foreach($recentPayrolls as $payroll)
+                                <tr>
+                                    <td class="px-3 py-3 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">{{ $payroll->employee->name }}</div>
+                                        <div class="text-sm text-gray-500">{{ $payroll->employee->email }}</div>
+                                    </td>
+                                    <td class="px-3 py-3 text-sm text-gray-500">{{ $payroll->periode_bayar }}</td>
+                                    <td class="px-3 py-3 text-sm font-semibold text-gray-800">
+                                        Rp{{ number_format($payroll->gaji_pokok + $payroll->komponen_tambahan - $payroll->potongan, 0, ',', '.') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @else
+                <p class="text-gray-500">No recent payrolls.</p>
             @endif
         </div>
     </div>
