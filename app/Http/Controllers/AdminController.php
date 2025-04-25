@@ -63,7 +63,7 @@ class AdminController extends Controller
             'used_emergency_leave' => 0,
         ]);
 
-        return redirect()->route('admin.employees')->with('success', 'Employee created successfully.');
+        return redirect()->route('admin.employees')->with('success', 'Karyawan berhasil ditambahkan.');
     }
 
     public function updateEmployee(Request $request, $id)
@@ -83,13 +83,13 @@ class AdminController extends Controller
 
         // Check if new quotas are less than used quotas
         if ($validated['annual_leave_quota'] < $employee->used_annual_leave) {
-            return back()->withErrors(['annual_leave_quota' => 'Annual leave quota cannot be less than used quota']);
+            return back()->withErrors(['annual_leave_quota' => 'Kuota cuti tahunan tidak boleh kurang dari kuota yang digunakan']);
         }
         if ($validated['sick_leave_quota'] < $employee->used_sick_leave) {
-            return back()->withErrors(['sick_leave_quota' => 'Sick leave quota cannot be less than used quota']);
+            return back()->withErrors(['sick_leave_quota' => 'Kuota cuti sakit tidak boleh kurang dari kuota yang digunakan']);
         }
         if ($validated['emergency_leave_quota'] < $employee->used_emergency_leave) {
-            return back()->withErrors(['emergency_leave_quota' => 'Emergency leave quota cannot be less than used quota']);
+            return back()->withErrors(['emergency_leave_quota' => 'Kuota cuti darurat tidak boleh kurang dari kuota yang digunakan']);
         }
 
         $employee->name = $validated['name'];
@@ -106,7 +106,7 @@ class AdminController extends Controller
 
         $employee->save();
 
-        return redirect()->route('admin.employees')->with('success', 'Employee updated successfully.');
+        return redirect()->route('admin.employees')->with('success', 'Data Karyawan berhasil diperbarui.');
     }
 
     public function deleteEmployee($id)
@@ -114,11 +114,11 @@ class AdminController extends Controller
         $employee = Employee::findOrFail($id);
         
         if ($employee->role !== 'employee') {
-            return back()->with('error', 'You can only delete employee accounts.');
+            return back()->with('error', 'Anda hanya dapat menghapus akun karyawan.');
         }
 
         $employee->delete();
 
-        return redirect()->route('admin.employees')->with('success', 'Employee deleted successfully.');
+        return redirect()->route('admin.employees')->with('success', 'Data karyawan berhasil dihapus.');
     }
 }

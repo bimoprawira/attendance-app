@@ -77,7 +77,7 @@ class PresenceController extends Controller
     {
         $employee = Auth::user();
         if (!$employee || !$employee->employee_id) {
-            return redirect()->route('login')->with('error', 'Please login to access this page.');
+            return redirect()->route('login')->with('error', 'Silakan login terlebih dahulu untuk mengakses halaman ini.');
         }
 
         $today = Carbon::today();
@@ -112,7 +112,7 @@ class PresenceController extends Controller
     {
         $employee = Auth::user();
         if (!$employee || !$employee->employee_id) {
-            return redirect()->route('login')->with('error', 'Please login to access this page.');
+            return redirect()->route('login')->with('error', 'Silakan login untuk mengakses halaman ini.');
         }
 
         $now = Carbon::now();
@@ -123,17 +123,17 @@ class PresenceController extends Controller
 
         // Check if on leave
         if ($presence->status === 'on_leave') {
-            return back()->with('error', 'You cannot check in while on leave.');
+            return back()->with('error', 'Anda tidak dapat presensi saat sedang cuti.');
         }
 
         // Check if already checked in
         if ($presence->check_in) {
-            return back()->with('error', 'You have already checked in today.');
+            return back()->with('error', 'Anda sudah presensi hari ini.');
         }
 
         // Check if past late threshold
         if ($now->format('H:i') > $this->getLateBeforeTime()) {
-            return back()->with('error', 'Check-in is no longer available. You are marked as absent for today.');
+            return back()->with('error', 'Presensi tidak tersedia lagi. Anda ditandai sebagai absen untuk hari ini.');
         }
 
         // Check if attendance form is not yet open
@@ -144,7 +144,7 @@ class PresenceController extends Controller
         }
 
         // Determine status based on time
-        $status = $now->format('H:i') > $this->getPresentBeforeTime() ? 'late' : 'present';
+        $status = $now->format('H:i') > $this->getPresentBeforeTime() ? 'late' : 'Hadir';
 
         // Update presence record
         $presence->update([
@@ -152,14 +152,14 @@ class PresenceController extends Controller
             'status' => $status
         ]);
 
-        return back()->with('success', 'Successfully checked in.');
+        return back()->with('success', 'Presensi masuk berhasil.');
     }
 
     public function checkOut()
     {
         $employee = Auth::user();
         if (!$employee || !$employee->employee_id) {
-            return redirect()->route('login')->with('error', 'Please login to access this page.');
+            return redirect()->route('login')->with('error', 'Silakan login untuk mengakses halaman ini.');
         }
 
         $now = Carbon::now();
@@ -169,17 +169,17 @@ class PresenceController extends Controller
 
         // Check if on leave
         if ($presence->status === 'on_leave') {
-            return back()->with('error', 'You cannot check out while on leave.');
+            return back()->with('error', 'Anda tidak dapat melakukan presensi keluar saat sedang cuti.');
         }
 
         // Check if not checked in
         if (!$presence->check_in) {
-            return back()->with('error', 'You need to check in first.');
+            return back()->with('error', 'Anda perlu melakukan presensi terlebih dahulu.');
         }
 
         // Check if already checked out
         if ($presence->check_out) {
-            return back()->with('error', 'You have already checked out today.');
+            return back()->with('error', 'Anda sudah presensi keluar hari ini.');
         }
 
         // Update presence record
@@ -187,14 +187,14 @@ class PresenceController extends Controller
             'check_out' => $now
         ]);
 
-        return back()->with('success', 'Successfully checked out.');
+        return back()->with('success', 'Presensi keluar berhasil .');
     }
 
     public function history()
     {
         $employee = Auth::user();
         if (!$employee || !$employee->employee_id) {
-            return redirect()->route('login')->with('error', 'Please login to access this page.');
+            return redirect()->route('login')->with('error', 'Silakan login untuk mengakses halaman ini.');
         }
         
         // First update any old records that should be absent

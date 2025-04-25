@@ -17,7 +17,7 @@ class AdminMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!Auth::guard('admin')->check()) {
-            return redirect()->route('login')->with('error', 'Access denied. Admin privileges required.');
+            return redirect()->route('login')->with('error', 'Akses ditolak. Diperlukan admin privilege.');
         }
 
         return $next($request);

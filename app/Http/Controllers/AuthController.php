@@ -46,7 +46,7 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'login' => 'The provided credentials do not match our records.',
+            'login' => 'Email atau password tidak sesuai.',
         ])->withInput($request->only('login'));
     }
 

@@ -22,7 +22,7 @@ class LeaveController extends Controller
     {
         try {
             if ($leave->status !== 'pending') {
-                return redirect()->back()->with('error', 'Leave request has already been processed.');
+                return redirect()->back()->with('error', 'Permintaan cuti telah diproses.');
             }
 
             // Load the employee relationship if not already loaded
@@ -44,10 +44,10 @@ class LeaveController extends Controller
                 'approved_by' => Auth::guard('admin')->id()
             ]);
 
-            return redirect()->back()->with('success', 'Leave request approved successfully.');
+            return redirect()->back()->with('success', 'Permintaan cuti berhasil disetujui.');
         } catch (\Exception $e) {
             \Log::error('Leave approval error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Error processing leave request.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses permintaan cuti.');
         }
     }
 
@@ -55,7 +55,7 @@ class LeaveController extends Controller
     {
         try {
             if ($leave->status !== 'pending') {
-                return redirect()->back()->with('error', 'Leave request has already been processed.');
+                return redirect()->back()->with('error', 'Permintaan cuti sudah diproses.');
             }
 
             $leave->update([
@@ -64,10 +64,10 @@ class LeaveController extends Controller
                 'approved_by' => Auth::guard('admin')->id()
             ]);
 
-            return redirect()->back()->with('success', 'Leave request rejected successfully.');
+            return redirect()->back()->with('success', 'Permintaan cuti berhasil ditolak.');
         } catch (\Exception $e) {
             \Log::error('Leave rejection error: ' . $e->getMessage());
-            return redirect()->back()->with('error', 'Error processing leave request.');
+            return redirect()->back()->with('error', 'Terjadi kesalahan saat memproses permintaan cuti.');
         }
     }
 } 

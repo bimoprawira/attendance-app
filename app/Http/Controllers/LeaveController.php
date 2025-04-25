@@ -43,7 +43,7 @@ class LeaveController extends Controller
         $availableQuota = $employee->$quotaField - $employee->$usedField;
 
         if ($days > $availableQuota) {
-            return back()->with('error', "Insufficient {$request->type} leave quota. You only have {$availableQuota} days available.");
+            return back()->with('error', "Kuota cuti {$request->type} tidak mencukupi. Anda hanya memiliki {$availableQuota} hari yang tersedia.");
         }
 
         // Create leave request
@@ -57,7 +57,7 @@ class LeaveController extends Controller
         ]);
 
         return redirect()->route('leaves.index')
-            ->with('success', 'Leave request submitted successfully.');
+            ->with('success', 'Permintaan cuti berhasil dikirim.');
     }
 
     public function show($id)
@@ -87,7 +87,7 @@ class LeaveController extends Controller
     public function approve(Leave $leave)
     {
         if ($leave->status !== 'pending') {
-            return back()->with('error', 'This leave request has already been processed.');
+            return back()->with('error', 'Permintaan cuti ini sudah diproses.');
         }
 
         $employee = $leave->employee;
@@ -103,13 +103,13 @@ class LeaveController extends Controller
             'approved_by' => Auth::id()
         ]);
 
-        return back()->with('success', 'Leave request approved successfully.');
+        return back()->with('success', 'Permintaan cuti berhasil disetujui.');
     }
 
     public function reject(Leave $leave)
     {
         if ($leave->status !== 'pending') {
-            return back()->with('error', 'This leave request has already been processed.');
+            return back()->with('error', 'Permintaan cuti ini sudah diproses.');
         }
 
         $leave->update([
@@ -118,6 +118,6 @@ class LeaveController extends Controller
             'approved_by' => Auth::id()
         ]);
 
-        return back()->with('success', 'Leave request rejected successfully.');
+        return back()->with('success', 'Permintaan cuti ditolak.');
     }
 }
