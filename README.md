@@ -59,7 +59,7 @@ php artisan serve
 
 ### Admin Account
 - Email: admin@example.com
-- Password: password
+- Password: admin123
 
 ### Employee Account
 - Email: employee@example.com
