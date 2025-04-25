@@ -29,11 +29,6 @@
                 <div class="flex items-center">
                     <a href="/" class="text-2xl font-bold text-indigo-600">ABSEN.IN</a>
                 </div>
-                <div class="flex items-center space-x-8">
-                    <a href="#about" class="text-gray-600 hover:text-indigo-600 transition">Tentang Kami</a>
-                    <a href="#contact" class="text-gray-600 hover:text-indigo-600 transition">Kontak</a>
-                    <a href="{{ route('login') }}" class="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700 transition">Masuk</a>
-                </div>
             </div>
         </div>
     </nav>
@@ -79,28 +74,6 @@
         </div>
     </div>
 
-    <!-- About Section -->
-    <div id="about" class="py-20 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Tentang Kami</h2>
-            <div class="text-center max-w-3xl mx-auto">
-                <p class="text-gray-600 text-lg">
-                    Kami berdedikasi untuk merevolusi manajemen kehadiran dan penggajian dengan teknologi mutakhir dan solusi yang ramah pengguna. Platform kami membantu organisasi dari berbagai ukuran untuk mengelola proses absensi dan penggajian dengan lebih efisien.
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Contact Section -->
-    <div id="contact" class="py-20 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-center mb-12">Hubungi Kami</h2>
-            <div class="text-center">
-                <p class="text-gray-600 mb-4">Punya pertanyaan? Kami siap membantu Anda.</p>
-                <p class="text-gray-600">Email: support@absen.in</p>
-            </div>
-        </div>
-    </div>
 
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-8">

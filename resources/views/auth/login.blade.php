@@ -23,10 +23,6 @@
                 <div class="flex items-center">
                     <a href="/" class="text-2xl font-bold text-indigo-600">ABSEN.IN</a>
                 </div>
-                <div class="flex items-center space-x-8">
-                    <a href="/#about" class="text-gray-600 hover:text-indigo-600 transition">Tentang Kami</a>
-                    <a href="/#contact" class="text-gray-600 hover:text-indigo-600 transition">Kontak</a>
-                </div>
             </div>
         </div>
     </nav>
