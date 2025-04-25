@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Attendance')
+@section('title', 'Kehadiran')
 
 @section('content')
 <div class="container mx-auto px-4 py-8">
     <div class="max-w-3xl mx-auto">
         <div class="bg-white shadow-lg rounded-lg p-6">
-            <h2 class="text-2xl font-bold mb-6">Attendance</h2>
+            <h2 class="text-2xl font-bold mb-6">Kehadiran</h2>
 
             @if (session('error'))
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
@@ -20,56 +20,56 @@
                 </div>
             @endif
 
-            <!-- Attendance Rules -->
+            <!-- Aturan Kehadiran -->
             <div class="bg-white border border-gray-200 rounded-lg shadow-sm mb-6">
                 <div class="border-b border-gray-200 bg-gray-50 px-4 py-3">
-                    <h3 class="text-lg font-semibold text-gray-800">Attendance Rules</h3>
+                    <h3 class="text-lg font-semibold text-gray-800">Aturan Kehadiran</h3>
                 </div>
                 <div class="p-4 space-y-4">
-                    <!-- Form Opens -->
+                    <!-- Form Dibuka -->
                     <div class="flex items-center">
                         <div class="w-32 flex-shrink-0">
-                            <span class="text-sm font-medium text-gray-500">Form Opens:</span>
+                            <span class="text-sm font-medium text-gray-500">Form Dibuka:</span>
                         </div>
                         <div class="flex-grow">
                             <span class="text-sm font-semibold text-blue-600">{{ $formOpenTime }}</span>
                         </div>
                     </div>
 
-                    <!-- Present -->
+                    <!-- Hadir -->
                     <div class="flex items-center">
                         <div class="w-32 flex-shrink-0">
-                            <span class="text-sm font-medium text-gray-500">Present:</span>
+                            <span class="text-sm font-medium text-gray-500">Hadir:</span>
                         </div>
                         <div class="flex-grow">
-                            <span class="text-sm font-semibold text-green-600">Check-in before {{ $presentBefore }}</span>
+                            <span class="text-sm font-semibold text-green-600">Check-in sebelum {{ $presentBefore }}</span>
                         </div>
                     </div>
 
-                    <!-- Late -->
+                    <!-- Terlambat -->
                     <div class="flex items-center">
                         <div class="w-32 flex-shrink-0">
-                            <span class="text-sm font-medium text-gray-500">Late:</span>
+                            <span class="text-sm font-medium text-gray-500">Terlambat:</span>
                         </div>
                         <div class="flex-grow">
-                            <span class="text-sm font-semibold text-yellow-600">Check-in between {{ $presentBefore }} and {{ $lateBefore }}</span>
+                            <span class="text-sm font-semibold text-yellow-600">Check-in antara {{ $presentBefore }} dan {{ $lateBefore }}</span>
                         </div>
                     </div>
 
-                    <!-- Absent -->
+                    <!-- Absen -->
                     <div class="flex items-center">
                         <div class="w-32 flex-shrink-0">
-                            <span class="text-sm font-medium text-gray-500">Absent:</span>
+                            <span class="text-sm font-medium text-gray-500">Absen:</span>
                         </div>
                         <div class="flex-grow">
-                            <span class="text-sm font-semibold text-red-600">No check-in by {{ $lateBefore }}</span>
+                            <span class="text-sm font-semibold text-red-600">Tidak check-in sampai {{ $lateBefore }}</span>
                         </div>
                     </div>
 
-                    <!-- Current Time -->
+                    <!-- Waktu Saat Ini -->
                     <div class="flex flex-col pt-4 mt-2 border-t border-gray-200">
                         <div class="mb-2">
-                            <span class="text-sm font-medium text-gray-500">Current Time</span>
+                            <span class="text-sm font-medium text-gray-500">Waktu Saat Ini</span>
                         </div>
                         <div class="bg-gradient-to-r from-indigo-50 to-blue-50 rounded-lg p-3 shadow-sm">
                             <div id="currentTime" class="text-center">
@@ -85,25 +85,25 @@
             </div>
 
             <div class="mb-8">
-                <h3 class="text-lg font-semibold mb-4">Today's Status</h3>
+                <h3 class="text-lg font-semibold mb-4">Status Hari Ini</h3>
                 <div class="bg-gray-50 rounded-lg p-6">
                     <div class="flex items-center justify-between">
                         <div>
-                            <p class="text-gray-600">Current Status:</p>
+                            <p class="text-gray-600">Status Saat Ini:</p>
                             <p class="font-medium mt-1">
                                 @if($status === 'present')
-                                    <span class="text-green-600">Present</span>
+                                    <span class="text-green-600">Hadir</span>
                                 @elseif($status === 'late')
-                                    <span class="text-yellow-600">Late</span>
+                                    <span class="text-yellow-600">Terlambat</span>
                                 @elseif($status === 'absent')
-                                    <span class="text-red-600">Absent</span>
+                                    <span class="text-red-600">Absen</span>
                                 @elseif($status === 'on_leave')
-                                    <span class="text-purple-600">On Leave</span>
+                                    <span class="text-purple-600">Cuti</span>
                                 @else
                                     @if(now()->format('H:i') > $lateBefore)
-                                        <span class="text-red-600">Absent</span>
+                                        <span class="text-red-600">Absen</span>
                                     @else
-                                        <span class="text-gray-600">Not Checked In</span>
+                                        <span class="text-gray-600">Belum Check-in</span>
                                     @endif
                                 @endif
                             </p>
@@ -111,10 +111,10 @@
                         <div>
                             @if($presence)
                                 @if($presence->check_in)
-                                    <p class="text-sm text-gray-600">Check-in time: {{ optional($presence->check_in)->format('H:i') ?? '-' }}</p>
+                                    <p class="text-sm text-gray-600">Waktu check-in: {{ optional($presence->check_in)->format('H:i') ?? '-' }}</p>
                                 @endif
                                 @if($presence->check_out)
-                                    <p class="text-sm text-gray-600">Check-out time: {{ optional($presence->check_out)->format('H:i') ?? '-' }}</p>
+                                    <p class="text-sm text-gray-600">Waktu check-out: {{ optional($presence->check_out)->format('H:i') ?? '-' }}</p>
                                 @endif
                             @endif
                         </div>
@@ -132,14 +132,14 @@
 
             <div class="flex justify-center items-center space-x-4 mb-8">
                 @if($status === 'on_leave')
-                    <p class="text-blue-500 italic">You are on leave today.</p>
+                    <p class="text-blue-500 italic">Anda sedang cuti hari ini.</p>
                 @elseif($status === 'absent')
-                    <p class="text-red-500 italic">Check-in is no longer available. You are marked as absent for today.</p>
+                    <p class="text-red-500 italic">Check-in tidak tersedia lagi. Anda ditandai absen hari ini.</p>
                 @elseif($isPastLateThreshold && !$presence->check_in)
-                    <p class="text-red-500 italic">Check-in is no longer available. You are marked as absent for today.</p>
+                    <p class="text-red-500 italic">Check-in tidak tersedia lagi. Anda ditandai absen hari ini.</p>
                 @elseif(!$presence->check_in)
                     @if(!$isFormOpen)
-                        <p class="text-blue-500 italic">Check-in will be available from {{ $formOpenTime }}</p>
+                        <p class="text-blue-500 italic">Check-in akan tersedia mulai {{ $formOpenTime }}</p>
                     @else
                         <form action="{{ route('presence.checkIn') }}" method="POST">
                             @csrf
@@ -158,14 +158,14 @@
                         </button>
                     </form>
                 @else
-                    <p class="text-gray-500 italic">You have completed your attendance for today</p>
+                    <p class="text-gray-500 italic">Anda telah menyelesaikan kehadiran hari ini</p>
                 @endif
             </div>
 
             <div class="mt-8">
                 <a href="{{ route('presence.history') }}"
                    class="text-blue-500 hover:text-blue-600 font-medium">
-                    View Attendance History →
+                    Lihat Riwayat Kehadiran →
                 </a>
             </div>
         </div>
@@ -184,8 +184,8 @@ function updateClock() {
     const displayHours = String(hours % 12 || 12).padStart(2, '0');
 
     // Format date
-    const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-    const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+    const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
     const day = days[now.getDay()];
     const date = now.getDate();
     const month = months[now.getMonth()];

@@ -6,18 +6,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Admin\GajiController;
 
 // Public routes
-Route::get('/', function () {
-    if (Auth::guard('admin')->check()) {
-        return redirect()->route('admin.dashboard');
-    } elseif (Auth::check()) {
-        return redirect()->route('dashboard');
-    }
-    return redirect()->route('login');
-});
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 // Authentication routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
@@ -66,6 +60,4 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::get('/gaji', [App\Http\Controllers\Admin\GajiController::class, 'index'])->name('gaji.index');
     Route::get('/gaji/create', [App\Http\Controllers\Admin\GajiController::class, 'create'])->name('gaji.create');
     Route::post('/gaji', [App\Http\Controllers\Admin\GajiController::class, 'store'])->name('gaji.store');
-
-
 });

@@ -27,7 +27,7 @@
                             <div class="flex-shrink-0 flex items-center">
                                 <a href="{{ Auth::guard('admin')->check() ? route('admin.dashboard') : route('dashboard') }}"
                                    class="text-xl font-bold text-blue-600">
-                                    Aplikasi Kehadiran
+                                    ABSEN.IN
                                 </a>
                             </div>
 
