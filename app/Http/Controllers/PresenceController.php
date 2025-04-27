@@ -98,7 +98,7 @@ class PresenceController extends Controller
         $presentBeforeTime = Carbon::createFromTimeString($this->getPresentBeforeTime());
         $formOpenTime = $presentBeforeTime->copy()->subMinutes(30)->format('H:i');
 
-        return view('presence.index', [
+        return view('employee.presence.index', [
             'status' => $presence->status,
             'presence' => $presence,
             'now' => $now->format('H:i'),
@@ -212,6 +212,6 @@ class PresenceController extends Controller
             ->orderBy('date', 'desc')
             ->paginate(10);
 
-        return view('presence.history', compact('presences'));
+        return view('employee.presence.history', compact('presences'));
     }
 }

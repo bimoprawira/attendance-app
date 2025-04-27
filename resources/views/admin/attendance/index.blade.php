@@ -3,131 +3,99 @@
 @section('title', 'Attendance Management')
 
 @section('content')
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="py-8">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6">Absensi Karyawan</h2>
-
+<style>
+    body {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+    .section-title { font-size: 1.7rem; }
+    .table-header { font-size: 1rem; }
+    .table-cell { font-size: 1rem; }
+</style>
+<div class="flex justify-center items-start min-h-screen py-8">
+    <div class="w-full max-w-7xl bg-white/90 rounded-3xl shadow-2xl p-10">
+        <h2 class="section-title font-bold text-indigo-700 mb-8">Kehadiran Karyawan</h2>
         <!-- Filters -->
-        <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
-            <div class="flex flex-wrap items-center gap-4">
-                <div class="flex-1 min-w-[200px]">
-                    <label for="date" class="block text-sm font-medium text-gray-700 mb-1">Tanggal</label>
-                    <input type="date"
-                           id="date"
-                           name="date"
-                           value="{{ request('date', now()->format('Y-m-d')) }}"
-                           placeholder="mm/dd/yyyy"
-                           class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                </div>
+        <div class="flex gap-2 mb-4">
+            <!-- Tanggal Filter -->
+            <div class="w-72 bg-white rounded-xl shadow-lg p-4">
+                <label for="date" class="block text-base font-medium text-gray-700 mb-2">Tanggal</label>
+                <input type="date"
+                       id="date"
+                       name="date"
+                       value="{{ request('date', now()->format('Y-m-d')) }}"
+                       placeholder="mm/dd/yyyy"
+                       onchange="applyFilters()"
+                       class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base">
+            </div>
 
-                <div class="flex-1 min-w-[200px]">
-                    <label for="status" class="block text-sm font-medium text-gray-700 mb-1">Status</label>
-                    <select id="status"
-                            name="status"
-                            class="w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                        <option value="">Semua Status</option>
-                        <option value="present" {{ request('status') === 'present' ? 'selected' : '' }}>Hadir</option>
-                        <option value="late" {{ request('status') === 'late' ? 'selected' : '' }}>Terlambat </option>
-                        <option value="absent" {{ request('status') === 'absent' ? 'selected' : '' }}>Tidak Hadir</option>
-                        <option value="on_leave" {{ request('status') === 'on_leave' ? 'selected' : '' }}>Cuti</option>
-                        <option value="not_checked_in" {{ request('status') === 'not_checked_in' ? 'selected' : '' }}>Belum Hadir</option>
-                    </select>
-                </div>
+            <!-- Status Filter -->
+            <div class="w-72 bg-white rounded-xl shadow-lg p-4">
+                <label for="status" class="block text-base font-medium text-gray-700 mb-2">Status</label>
+                <select id="status"
+                        name="status"
+                        onchange="applyFilters()"
+                        class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base">
+                    <option value="" {{ request('status') === '' ? 'selected' : '' }}>Semua Status</option>
+                    <option value="present" {{ request('status') === 'present' ? 'selected' : '' }}>Hadir</option>
+                    <option value="late" {{ request('status') === 'late' ? 'selected' : '' }}>Terlambat</option>
+                    <option value="absent" {{ request('status') === 'absent' ? 'selected' : '' }}>Tidak Hadir</option>
+                    <option value="on_leave" {{ request('status') === 'on_leave' ? 'selected' : '' }}>Cuti</option>
+                    <option value="not_checked_in" {{ request('status') === 'not_checked_in' ? 'selected' : '' }}>Belum Presensi</option>
+                </select>
+            </div>
 
-                <div class="flex items-end">
-                    <button type="button"
-                            onclick="applyFilters()"
-                            class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                        Terapkan Filter
-                    </button>
+            <!-- Search Filter -->
+            <div class="flex-1 bg-white rounded-xl shadow-lg p-4">
+                <label for="search" class="block text-base font-medium text-gray-700 mb-2">Cari Karyawan</label>
+                <div class="relative">
+                    <input type="text"
+                           id="search"
+                           name="search"
+                           value="{{ request('search') }}"
+                           placeholder="Masukkan nama atau email karyawan"
+                           onchange="applyFilters()"
+                           class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base pr-10">
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-3">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
                 </div>
             </div>
         </div>
-
         <!-- Table -->
-        <div class="bg-white rounded-lg shadow-sm overflow-hidden">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200">
-                    <thead class="bg-gray-50">
-                        <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Karyawan</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Absen Masuk</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Absen Keluar</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white divide-y divide-gray-200">
-                        @foreach($attendances as $attendance)
-                            <tr class="hover:bg-gray-50">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="flex items-center">
-                                        <div class="flex-shrink-0 h-10 w-10">
-                                            <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
-                                                <span class="text-blue-600 font-medium text-lg">
-                                                    {{ strtoupper(substr($attendance->employee->name, 0, 1)) }}
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="ml-4">
-                                            <div class="text-sm font-medium text-gray-900">{{ $attendance->employee->name }}</div>
-                                            <div class="text-sm text-gray-500">{{ $attendance->employee->email }}</div>
-                                        </div>
-                                    </div>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $attendance->date->format('M d, Y') }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $attendance->check_in ? $attendance->check_in->format('H:i') : '-' }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                    {{ $attendance->check_out ? $attendance->check_out->format('H:i') : '-' }}
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    @if(isset($attendance->is_on_leave) && $attendance->is_on_leave)
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
-                                            On Leave
-                                        </span>
-                                    @else
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                            @if($attendance->status === 'present') bg-green-100 text-green-800
-                                            @elseif($attendance->status === 'late') bg-yellow-100 text-yellow-800
-                                            @elseif($attendance->status === 'on_leave') bg-purple-100 text-purple-800
-                                            @elseif($attendance->status === 'not_checked_in') bg-gray-100 text-gray-800
-                                            @else bg-red-100 text-red-800 @endif">
-                                            @if($attendance->status === 'not_checked_in')
-                                                Belum Absen Masuk
-                                            @else
-                                                {{ ucfirst($attendance->status) }}
-                                            @endif
-                                        </span>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden p-8">
+            <div class="overflow-x-auto" id="attendance-table-area">
+                @include('admin.attendance._table', ['attendances' => $attendances, 'searchTerm' => request('search', '')])
             </div>
         </div>
-
-        <div class="mt-6">
+        <div class="mt-8">
             {{ $attendances->links() }}
         </div>
     </div>
 </div>
-
 <script>
 function applyFilters() {
     const date = document.getElementById('date').value;
     const status = document.getElementById('status').value;
+    const search = document.getElementById('search').value;
 
-    let url = new URL(window.location.href);
-    if (date) url.searchParams.set('date', date);
-    if (status) url.searchParams.set('status', status);
+    // Build query string
+    const params = new URLSearchParams();
+    if (date) params.set('date', date);
+    if (status) params.set('status', status);
+    if (search) params.set('search', search);
 
-    window.location.href = url.toString();
+    fetch(`/admin/attendance/ajax-table?${params.toString()}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('attendance-table-area').innerHTML = html;
+        });
 }
+
+document.getElementById('search').addEventListener('input', applyFilters);
+document.getElementById('date').addEventListener('change', applyFilters);
+document.getElementById('status').addEventListener('change', applyFilters);
 
 // Initialize datepicker with today's date if no date is selected
 document.addEventListener('DOMContentLoaded', function() {

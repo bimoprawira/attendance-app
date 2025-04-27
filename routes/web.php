@@ -47,9 +47,11 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::post('/employees', [AdminController::class, 'storeEmployee'])->name('employees.store');
     Route::put('/employees/{id}', [AdminController::class, 'updateEmployee'])->name('employees.update');
     Route::delete('/employees/{id}', [AdminController::class, 'deleteEmployee'])->name('employees.delete');
+    Route::get('/employees/ajax-table', [App\Http\Controllers\AdminController::class, 'ajaxEmployeesTable'])->name('employees.ajax-table');
 
     // Attendance management
     Route::get('/attendance', [App\Http\Controllers\Admin\AttendanceController::class, 'index'])->name('attendance.index');
+    Route::get('/attendance/ajax-table', [App\Http\Controllers\Admin\AttendanceController::class, 'ajaxTable'])->name('attendance.ajax-table');
 
     // Leave management
     Route::get('/leaves', [App\Http\Controllers\Admin\LeaveController::class, 'index'])->name('leaves.index');

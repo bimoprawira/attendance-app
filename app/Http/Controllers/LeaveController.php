@@ -15,12 +15,12 @@ class LeaveController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(10);
         
-        return view('leaves.index', compact('leaves'));
+        return view('employee.leaves.index', compact('leaves'));
     }
 
     public function create()
     {
-        return view('leaves.create');
+        return view('employee.leaves.create');
     }
 
     public function store(Request $request)

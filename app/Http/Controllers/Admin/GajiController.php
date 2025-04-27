@@ -15,7 +15,8 @@ class GajiController extends Controller
     public function index()
     {
         $gajis = Gaji::with('employee')->get();
-        return view('admin.gaji.index', compact('gajis'));
+        $karyawans = \App\Models\Employee::all();
+        return view('admin.gaji.index', compact('gajis', 'karyawans'));
     }
 
     // Form tambah gaji
@@ -46,7 +47,7 @@ class GajiController extends Controller
                     ->orderBy('created_at', 'desc')
                     ->get();
 
-        return view('gaji.index', compact('gajis'));
+        return view('employee.gaji.index', compact('gajis'));
     }
 
     // Export gaji (employee)

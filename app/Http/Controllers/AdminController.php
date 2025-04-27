@@ -31,7 +31,15 @@ class AdminController extends Controller
 
     public function employees()
     {
-        $employees = Employee::where('role', 'employee')->paginate(10);
+        $query = Employee::where('role', 'employee');
+        if (request()->filled('search')) {
+            $search = request('search');
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%") ;
+            });
+        }
+        $employees = $query->paginate(10);
         return view('admin.employees.index', compact('employees'));
     }
 
@@ -120,5 +128,20 @@ class AdminController extends Controller
         $employee->delete();
 
         return redirect()->route('admin.employees')->with('success', 'Data karyawan berhasil dihapus.');
+    }
+
+    public function ajaxEmployeesTable(Request $request)
+    {
+        $query = Employee::where('role', 'employee');
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('name', 'like', "%$search%")
+                  ->orWhere('email', 'like', "%$search%") ;
+            });
+        }
+        $employees = $query->paginate(10);
+        $searchTerm = $request->search ?? '';
+        return view('admin.employees._table', compact('employees', 'searchTerm'))->render();
     }
 }

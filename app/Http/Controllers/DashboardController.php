@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
         $isAbsentTime = Carbon::now()->format('H:i') > '10:00' && !$presence;
 
-        return view('dashboard.employee', compact('presence', 'leaves', 'isAbsentTime'));
+        return view('employee.dashboard.employee', compact('presence', 'leaves', 'isAbsentTime'));
     }
 
     public function adminDashboard()
@@ -175,7 +175,7 @@ class DashboardController extends Controller
             ->get();
         // ========================================
 
-        return view('admin.dashboard', compact(
+        return view('admin.dashboard.admin', compact(
             'totalEmployees',
             'todayPresent',
             'todayLate',
