@@ -62,4 +62,5 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::get('/gaji', [App\Http\Controllers\Admin\GajiController::class, 'index'])->name('gaji.index');
     Route::get('/gaji/create', [App\Http\Controllers\Admin\GajiController::class, 'create'])->name('gaji.create');
     Route::post('/gaji', [App\Http\Controllers\Admin\GajiController::class, 'store'])->name('gaji.store');
+    Route::get('/gaji/export', [App\Http\Controllers\Admin\GajiController::class, 'exportAll'])->name('gaji.export');
 });

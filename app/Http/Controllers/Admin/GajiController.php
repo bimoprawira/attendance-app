@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Gaji;
 use App\Models\Employee;
 use App\Exports\GajiExport;
+use App\Exports\AdminGajiExport;
 use Maatwebsite\Excel\Facades\Excel;
 
 class GajiController extends Controller
@@ -54,5 +55,12 @@ class GajiController extends Controller
     public function export()
     {
         return Excel::download(new GajiExport(auth()->user()->employee_id), 'gaji.xlsx');
+    }
+
+    // Export gaji (admin)
+    public function exportAll()
+    {
+        $filename = 'data_gaji_karyawan_' . date('Y-m-d_H-i-s') . '.xlsx';
+        return Excel::download(new AdminGajiExport(), $filename);
     }
 }

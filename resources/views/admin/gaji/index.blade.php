@@ -60,9 +60,9 @@
                     </table>
                 </div>
                 <div class="mt-6">
-                    <a href="{{ route('gaji.export') }}" class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-medium px-5 py-2 rounded-lg text-base transition">
+                    <a href="{{ route('admin.gaji.export') }}" class="inline-flex items-center bg-green-600 hover:bg-green-700 text-white font-medium px-5 py-2 rounded-lg text-base transition">
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v16m8-8H4"/>
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
                         </svg>
                         Unduh File Excel
                     </a>
@@ -128,6 +128,28 @@
 
 <!-- Tom Select CSS -->
 <link href="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/css/tom-select.css" rel="stylesheet">
+<style>
+    .ts-wrapper.single .ts-control {
+        padding: 12px;
+        border-radius: 0.75rem;
+        background-color: rgb(249 250 251);
+        border-color: rgb(209 213 219);
+    }
+    .ts-dropdown {
+        border-radius: 0.75rem;
+        margin-top: 4px;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    }
+    .ts-dropdown .active {
+        background-color: rgb(238 242 255);
+        color: rgb(79 70 229);
+    }
+    .ts-wrapper.single.input-active .ts-control {
+        border-radius: 0.75rem;
+        border-color: rgb(99 102 241);
+        box-shadow: 0 0 0 1px rgb(99 102 241);
+    }
+</style>
 
 <!-- Tom Select JS -->
 <script src="https://cdn.jsdelivr.net/npm/tom-select@2.3.1/dist/js/tom-select.complete.min.js"></script>
@@ -143,7 +165,25 @@ function openAddGajiModal() {
                 field: 'text',
                 direction: 'asc'
             },
-            placeholder: 'Cari nama karyawan...'
+            placeholder: 'Ketik nama karyawan untuk mencari...',
+            searchField: ['text'],
+            maxOptions: null,
+            persist: false,
+            closeAfterSelect: true,
+            plugins: ['clear_button'],
+            render: {
+                option: function(data, escape) {
+                    return `<div class="py-2 px-3">
+                        <div class="font-medium">${escape(data.text)}</div>
+                    </div>`;
+                },
+                item: function(data, escape) {
+                    return `<div>${escape(data.text)}</div>`;
+                },
+                no_results: function(data, escape) {
+                    return '<div class="py-2 px-3 text-gray-600">Karyawan tidak ditemukan</div>';
+                }
+            }
         });
         window.employeeSelectInitialized = true;
     }
