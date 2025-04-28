@@ -3,6 +3,8 @@
 @section('title', 'Attendance Management')
 
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
 <style>
     body {
         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
@@ -107,6 +109,30 @@ document.addEventListener('DOMContentLoaded', function() {
         const day = String(today.getDate()).padStart(2, '0');
         dateInput.value = `${year}-${month}-${day}`;
     }
+
+    // Initialize highlight.js
+    document.querySelectorAll('pre code').forEach((block) => {
+        hljs.highlightBlock(block);
+    });
+
+    // Initialize highlight.js for dynamic content
+    const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+                if (node.nodeType === 1) { // ELEMENT_NODE
+                    node.querySelectorAll('pre code').forEach((block) => {
+                        hljs.highlightBlock(block);
+                    });
+                }
+            });
+        });
+    });
+
+    // Start observing the attendance table area for changes
+    observer.observe(document.getElementById('attendance-table-area'), {
+        childList: true,
+        subtree: true
+    });
 });
 </script>
 @endsection

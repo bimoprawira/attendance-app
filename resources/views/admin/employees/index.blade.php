@@ -66,65 +66,65 @@
             <button type="button" onclick="document.getElementById('addEmployeeModal').classList.add('hidden')" class="text-gray-400 hover:text-red-500 text-2xl font-bold focus:outline-none">&times;</button>
         </div>
         <form method="POST" action="{{ route('admin.employees.store') }}" class="space-y-4 px-8 pb-8 pt-2">
-            @csrf
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-gray-700 text-base font-semibold mb-1" for="name">Nama</label>
+                @csrf
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-gray-700 text-base font-semibold mb-1" for="name">Nama</label>
                     <input type="text" name="name" id="name" required placeholder="Nama lengkap"
-                        class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-base font-semibold mb-1" for="email">Email</label>
+                            class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-base font-semibold mb-1" for="email">Email</label>
                     <input type="email" name="email" id="email" required placeholder="email@perusahaan.com"
-                        class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-base font-semibold mb-1" for="position">Jabatan</label>
+                            class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-base font-semibold mb-1" for="position">Jabatan</label>
                     <input type="text" name="position" id="position" required placeholder="Jabatan (misal: Staff, Manager)"
-                        class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-base font-semibold mb-1" for="password">Password</label>
+                            class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-base font-semibold mb-1" for="password">Password</label>
                     <input type="password" name="password" id="password" required placeholder="Password minimal 8 karakter"
-                        class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-base font-semibold mb-1" for="date_joined">Tanggal Bergabung</label>
-                    <input type="date" name="date_joined" id="date_joined" required
-                        class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
-                </div>
-                <div>
-                    <label class="block text-gray-700 text-base font-semibold mb-1">Kuota Cuti</label>
-                    <div class="grid grid-cols-3 gap-2">
-                        <div>
-                            <label class="block text-gray-700 text-xs mb-1" for="annual_leave_quota">Cuti Tahunan</label>
-                            <input type="number" name="annual_leave_quota" id="annual_leave_quota" required min="0" value="12"
-                                class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 text-xs mb-1" for="sick_leave_quota">Sakit</label>
-                            <input type="number" name="sick_leave_quota" id="sick_leave_quota" required min="0" value="12"
-                                class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base">
-                        </div>
-                        <div>
-                            <label class="block text-gray-700 text-xs mb-1" for="emergency_leave_quota">Darurat</label>
-                            <input type="number" name="emergency_leave_quota" id="emergency_leave_quota" required min="0" value="6"
-                                class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base">
+                            class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-base font-semibold mb-1" for="date_joined">Tanggal Bergabung</label>
+                        <input type="date" name="date_joined" id="date_joined" required
+                            class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-3 text-base">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 text-base font-semibold mb-1">Kuota Cuti</label>
+                        <div class="grid grid-cols-3 gap-2">
+                            <div>
+                                <label class="block text-gray-700 text-xs mb-1" for="annual_leave_quota">Cuti Tahunan</label>
+                                <input type="number" name="annual_leave_quota" id="annual_leave_quota" required min="0" value="12"
+                                    class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-xs mb-1" for="sick_leave_quota">Sakit</label>
+                                <input type="number" name="sick_leave_quota" id="sick_leave_quota" required min="0" value="12"
+                                    class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base">
+                            </div>
+                            <div>
+                                <label class="block text-gray-700 text-xs mb-1" for="emergency_leave_quota">Darurat</label>
+                                <input type="number" name="emergency_leave_quota" id="emergency_leave_quota" required min="0" value="6"
+                                    class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base">
+                            </div>
                         </div>
                     </div>
+                    <div class="col-span-1 md:col-span-2 mt-10 flex items-center justify-end gap-2">
+                        <button type="button" onclick="document.getElementById('addEmployeeModal').classList.add('hidden')"
+                            class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-xl">
+                            Batalkan
+                        </button>
+                        <button type="submit"
+                            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl shadow">
+                            Tambah Karyawan
+                        </button>
+                    </div>
                 </div>
-                <div class="col-span-1 md:col-span-2 mt-10 flex items-center justify-end gap-2">
-                    <button type="button" onclick="document.getElementById('addEmployeeModal').classList.add('hidden')"
-                        class="bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-xl">
-                        Batalkan
-                    </button>
-                    <button type="submit"
-                        class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl shadow">
-                        Tambah Karyawan
-                    </button>
-                </div>
-            </div>
-        </form>
+            </form>
     </div>
 </div>
 

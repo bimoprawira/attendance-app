@@ -21,8 +21,13 @@
                             </span>
                         </div>
                         <div class="ml-4">
-                            <div class="font-medium text-gray-900">{{ $attendance->employee->name }}</div>
-                            <div class="text-gray-500">{{ $attendance->employee->email }}</div>
+                            @if(request('search'))
+                                <div class="font-medium text-gray-900">{!! preg_replace('/('.preg_quote(request('search'), '/').')/i', '<mark class="bg-yellow-200">$1</mark>', e($attendance->employee->name)) !!}</div>
+                                <div class="text-gray-500">{!! preg_replace('/('.preg_quote(request('search'), '/').')/i', '<mark class="bg-yellow-200">$1</mark>', e($attendance->employee->email)) !!}</div>
+                            @else
+                                <div class="font-medium text-gray-900">{{ $attendance->employee->name }}</div>
+                                <div class="text-gray-500">{{ $attendance->employee->email }}</div>
+                            @endif
                         </div>
                     </div>
                 </td>
