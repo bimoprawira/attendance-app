@@ -16,8 +16,8 @@
                         <span class="text-indigo-600 font-medium text-lg">{{ strtoupper(substr($employee->name, 0, 1)) }}</span>
                     </div>
                     <div class="ml-4">
-                        <div class="text-base font-medium text-gray-900">{!! highlight($employee->name, $searchTerm ?? '') !!}</div>
-                        <div class="text-sm text-gray-500">{!! highlight($employee->email, $searchTerm ?? '') !!}</div>
+                        <div class="text-base font-medium text-gray-900">{{$employee->name }}</div>
+                        <div class="text-sm text-gray-500">{{$employee->email }}</div>
                         <div class="text-xs text-gray-400">Bergabung pada {{ $employee->date_joined->format('M d, Y') }}</div>
                     </div>
                 </div>
