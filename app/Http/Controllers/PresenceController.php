@@ -144,7 +144,7 @@ class PresenceController extends Controller
         }
 
         // Determine status based on time
-        $status = $now->format('H:i') > $this->getPresentBeforeTime() ? 'late' : 'Hadir';
+        $status = $now->format('H:i') > $this->getPresentBeforeTime() ? 'late' : 'present';
 
         // Update presence record
         $presence->update([

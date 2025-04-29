@@ -134,7 +134,7 @@
                                     </button>
                                 </form>
                             @endif
-                        @elseif(!$presence->check_out && in_array($status, ['present', 'late']))
+                        @elseif($presence->check_in && !$presence->check_out)
                             <form action="{{ route('presence.checkOut') }}" method="POST">
                                 @csrf
                                 <button type="submit"
