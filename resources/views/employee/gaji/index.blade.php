@@ -14,7 +14,7 @@
 <div class="flex justify-center items-start min-h-screen py-8">
     <div class="w-full max-w-5xl bg-white/90 rounded-3xl shadow-2xl p-10">
         <h2 class="section-title font-bold text-indigo-700 mb-2 tracking-wide text-left">Riwayat Gaji Saya</h2>
-        <div class="subtitle text-base text-gray-600 mb-8">Lihat dan unduh riwayat gaji Anda di bawah ini.</div>
+        <div class="text-base text-gray-600 mb-8">Lihat dan unduh riwayat gaji Anda di bawah ini.</div>
 
         @if(session('success'))
             <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">

@@ -141,7 +141,7 @@ class AttendanceController extends Controller
         if ($request->filled('status')) {
             $attendances = $attendances->filter(function ($attendance) use ($request) {
                 if ($request->status === 'on_leave') {
-                    return isset($attendance->is_on_leave) && $attendance->is_on_leave;
+                    return ($attendance->status === 'on_leave') || (isset($attendance->is_on_leave) && $attendance->is_on_leave);
                 }
                 if ($request->status === 'not_checked_in') {
                     return $attendance->status === 'not_checked_in';
@@ -274,7 +274,7 @@ class AttendanceController extends Controller
         if ($request->filled('status')) {
             $attendances = $attendances->filter(function ($attendance) use ($request) {
                 if ($request->status === 'on_leave') {
-                    return isset($attendance->is_on_leave) && $attendance->is_on_leave;
+                    return ($attendance->status === 'on_leave') || (isset($attendance->is_on_leave) && $attendance->is_on_leave);
                 }
                 if ($request->status === 'not_checked_in') {
                     return $attendance->status === 'not_checked_in';

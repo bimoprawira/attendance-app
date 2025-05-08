@@ -13,52 +13,60 @@
     <div class="w-full max-w-4xl bg-white/90 rounded-3xl shadow-2xl p-10">
         <div class="flex justify-between items-center mb-8">
             <h2 class="section-title font-bold text-indigo-700 mb-0 tracking-wide text-left">Riwayat Kehadiran</h2>
-            <a href="{{ route('presence.index') }}" class="text-blue-500 hover:text-blue-600 font-medium">← Kembali ke Kehadiran</a>
+            <a href="{{ route('presence.index') }}" class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition">
+                <span class="mr-1">&larr;</span>
+                Kembali ke Kehadiran
+            </a>
         </div>
 
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check In</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Check Out</th>
-                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    @forelse ($presences as $presence)
+        <div class="bg-white rounded-2xl shadow-lg overflow-hidden p-8">
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
                         <tr>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ optional($presence->date)->format('Y-m-d') ?? '-' }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ optional($presence->check_in)->format('H:i') ?? '-' }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                                {{ optional($presence->check_out)->format('H:i') ?? '-' }}
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if($presence->status === 'on_leave')
-                                    <span class="px-3 py-1 inline-flex text-sm leading-6 font-semibold rounded-full bg-purple-100 text-purple-800">Cuti</span>
-                                @elseif($presence->status === 'present')
-                                    <span class="px-3 py-1 inline-flex text-sm leading-6 font-semibold rounded-full bg-green-100 text-green-800">Hadir</span>
-                                @elseif($presence->status === 'late')
-                                    <span class="px-3 py-1 inline-flex text-sm leading-6 font-semibold rounded-full bg-yellow-100 text-yellow-800">Terlambat</span>
-                                @elseif($presence->status === 'absent')
-                                    <span class="px-3 py-1 inline-flex text-sm leading-6 font-semibold rounded-full bg-red-100 text-red-800">Absen</span>
-                                @else
-                                    <span class="px-3 py-1 inline-flex text-sm leading-6 font-semibold rounded-full bg-gray-100 text-gray-800">Belum Check-in</span>
-                                @endif
-                            </td>
+                            <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Tanggal</th>
+                            <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Presensi Masuk</th>
+                            <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Presensi Keluar</th>
+                            <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Status</th>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">Tidak ada data kehadiran ditemukan</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        @forelse ($presences as $presence)
+                            <tr>
+                                <td class="px-4 py-3 text-gray-500 table-cell">{{ optional($presence->date)->format('Y-m-d') ?? '-' }}</td>
+                                <td class="px-4 py-3 text-gray-500 table-cell">{{ optional($presence->check_in)->format('H:i') ?? '-' }}</td>
+                                <td class="px-4 py-3 text-gray-500 table-cell">{{ optional($presence->check_out)->format('H:i') ?? '-' }}</td>
+                                <td class="px-4 py-3 table-cell">
+                                    <span class="px-2 inline-flex text-base leading-6 font-semibold rounded-full
+                                        @if($presence->status === 'present') bg-green-100 text-green-800
+                                        @elseif($presence->status === 'late') bg-yellow-100 text-yellow-800
+                                        @elseif($presence->status === 'on_leave') bg-purple-100 text-purple-800
+                                        @elseif($presence->status === 'not_checked_in') bg-gray-100 text-gray-800
+                                        @else bg-red-100 text-red-800 @endif">
+                                        @if($presence->status === 'on_leave')
+                                            Cuti
+                                        @elseif($presence->status === 'not_checked_in')
+                                            Belum Presensi
+                                        @elseif($presence->status === 'present')
+                                            Hadir
+                                        @elseif($presence->status === 'late')
+                                            Terlambat
+                                        @elseif($presence->status === 'absent')
+                                            Tidak Hadir
+                                        @else
+                                            {{ ucfirst($presence->status) }}
+                                        @endif
+                                    </span>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-4 py-3 whitespace-nowrap text-sm text-gray-500 text-center">Tidak ada data kehadiran ditemukan</td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="mt-4">
