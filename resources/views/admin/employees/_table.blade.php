@@ -57,7 +57,17 @@
             </td>
             <td class="px-4 py-3 whitespace-nowrap text-base text-gray-500 table-cell">
                 <div class="flex space-x-3">
-                    <button onclick="editEmployee({{ $employee->employee_id }}, '{{ $employee->name }}', '{{ $employee->email }}', '{{ $employee->position }}', '{{ $employee->date_joined->format('Y-m-d') }}', {{ $employee->annual_leave_quota }}, {{ $employee->sick_leave_quota }}, {{ $employee->emergency_leave_quota }})"
+                    <button onclick="editEmployee(
+                        {{ $employee->employee_id }},
+                        '{{ $employee->name }}',
+                        '{{ $employee->email }}',
+                        '{{ $employee->position }}',
+                        '{{ $employee->date_joined->format('Y-m-d') }}',
+                        {{ $employee->annual_leave_quota }},
+                        {{ $employee->sick_leave_quota }},
+                        {{ $employee->emergency_leave_quota }},
+                        {{ $employee->gaji_pokok }}
+                    )"
                             class="px-4 py-1.5 bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-lg font-medium transition duration-150 ease-in-out">
                         Edit
                     </button>

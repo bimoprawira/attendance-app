@@ -8,7 +8,7 @@ use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\LandingController;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\Admin\GajiController;
+use App\Http\Controllers\GajiController;
 
 // Public routes
 Route::get('/', [LandingController::class, 'index'])->name('landing');
@@ -59,8 +59,14 @@ Route::middleware(['auth:admin'])->prefix('admin')->name('admin.')->group(functi
     Route::post('/leaves/{leave}/reject', [App\Http\Controllers\Admin\LeaveController::class, 'reject'])->name('leaves.reject');
 
     // Gaji management
-    Route::get('/gaji', [App\Http\Controllers\Admin\GajiController::class, 'index'])->name('gaji.index');
-    Route::get('/gaji/create', [App\Http\Controllers\Admin\GajiController::class, 'create'])->name('gaji.create');
-    Route::post('/gaji', [App\Http\Controllers\Admin\GajiController::class, 'store'])->name('gaji.store');
-    Route::get('/gaji/export', [App\Http\Controllers\Admin\GajiController::class, 'exportAll'])->name('gaji.export');
+    Route::get('/gaji', [GajiController::class, 'index'])->name('gaji.index');
+    Route::post('/gaji/{employee}/slip', [GajiController::class, 'storeSlip'])->name('gaji.store.slip');
+    Route::get('/gaji/{employee}/slip/{gaji}/print', [GajiController::class, 'printSlip'])->name('gaji.print.slip');
+});
+
+// Employee Routes
+Route::middleware(['auth'])->prefix('employee')->name('employee.')->group(function () {
+    // Gaji Routes
+    Route::get('/gaji', [GajiController::class, 'employeeIndex'])->name('gaji.index');
+    Route::get('/gaji/{gaji}/print', [GajiController::class, 'employeePrintSlip'])->name('gaji.print.slip');
 });

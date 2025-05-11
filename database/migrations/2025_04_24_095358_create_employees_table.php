@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('role')->default('employee');
             $table->string('position');
             $table->date('date_joined');
+            $table->decimal('gaji_pokok', 15, 2)->default(0);
             $table->integer('annual_leave_quota')->default(12);
             $table->integer('sick_leave_quota')->default(12);
             $table->integer('emergency_leave_quota')->default(6);

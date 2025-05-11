@@ -18,6 +18,7 @@ class Employee extends Authenticatable
         'role',
         'position',
         'date_joined',
+        'gaji_pokok',
         'annual_leave_quota',
         'sick_leave_quota',
         'emergency_leave_quota',

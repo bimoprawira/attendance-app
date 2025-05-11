@@ -17,6 +17,7 @@ return new class extends Migration
             $table->decimal('gaji_pokok', 15, 2);
             $table->decimal('potongan', 15, 2)->nullable();
             $table->decimal('komponen_tambahan', 15, 2)->nullable();
+            $table->string('status')->default('selesai');
             $table->string('periode_bayar'); // Contoh: 'April 2025'
             $table->timestamps();
 

@@ -51,6 +51,7 @@ class AdminController extends Controller
             'password' => 'required|string|min:8',
             'position' => 'required|string|max:255',
             'date_joined' => 'required|date',
+            'gaji_pokok' => 'required|numeric|min:0',
             'annual_leave_quota' => 'required|integer|min:0',
             'sick_leave_quota' => 'required|integer|min:0',
             'emergency_leave_quota' => 'required|integer|min:0',
@@ -63,6 +64,7 @@ class AdminController extends Controller
             'role' => 'employee',
             'position' => $validated['position'],
             'date_joined' => $validated['date_joined'],
+            'gaji_pokok' => $validated['gaji_pokok'],
             'annual_leave_quota' => $validated['annual_leave_quota'],
             'sick_leave_quota' => $validated['sick_leave_quota'],
             'emergency_leave_quota' => $validated['emergency_leave_quota'],
@@ -84,6 +86,7 @@ class AdminController extends Controller
             'password' => 'nullable|string|min:8',
             'position' => 'required|string|max:255',
             'date_joined' => 'required|date',
+            'gaji_pokok' => 'required|numeric|min:0',
             'annual_leave_quota' => 'required|integer|min:0',
             'sick_leave_quota' => 'required|integer|min:0',
             'emergency_leave_quota' => 'required|integer|min:0',
@@ -104,6 +107,7 @@ class AdminController extends Controller
         $employee->email = $validated['email'];
         $employee->position = $validated['position'];
         $employee->date_joined = $validated['date_joined'];
+        $employee->gaji_pokok = $validated['gaji_pokok'];
         $employee->annual_leave_quota = $validated['annual_leave_quota'];
         $employee->sick_leave_quota = $validated['sick_leave_quota'];
         $employee->emergency_leave_quota = $validated['emergency_leave_quota'];

@@ -9,14 +9,18 @@ class Gaji extends Model
 {
     use HasFactory;
 
+    protected $table = 'gajis';
     protected $primaryKey = 'id_gaji';
+    public $incrementing = true;
+    protected $keyType = 'int';
 
     protected $fillable = [
         'employee_id',
-        'gaji_pokok',
-        'potongan',
-        'komponen_tambahan',
         'periode_bayar',
+        'gaji_pokok',
+        'komponen_tambahan',
+        'potongan',
+        'status'
     ];
 
     public function employee()
