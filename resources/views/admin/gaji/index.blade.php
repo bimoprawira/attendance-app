@@ -19,10 +19,12 @@
         <div class="flex gap-2 mb-4">
             <div class="w-72 bg-white rounded-xl shadow-lg p-4">
                 <label for="filter_month" class="block text-base font-medium text-gray-700 mb-2">Periode</label>
-                <input type="month" id="filter_month" name="month" value="{{ $month }}" class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base" onchange="this.form.submit()" form="gajiFilterForm">
+                <input type="month" id="filter_month" name="month" value="{{ $month }}" class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base" onchange="resetPageAndSubmit()" form="gajiFilterForm">
             </div>
         </div>
-        <form id="gajiFilterForm" method="GET" class="hidden"></form>
+        <form id="gajiFilterForm" method="GET" class="hidden">
+            <input type="hidden" name="page" id="filter_page" value="1">
+        </form>
 
         @if(session('success'))
             <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
@@ -107,7 +109,7 @@
             </div>
         </div>
         <div class="mt-8">
-            {{ $employees->links() }}
+            {{ $employees->appends(request()->except('page'))->links() }}
         </div>
         @endif
     </div>
@@ -194,6 +196,11 @@ function openSlipGajiModal(employeeId, employeeName, gajiPokok, workdays, absent
 
 function closeSlipGajiModal() {
     document.getElementById('slipGajiModal').classList.add('hidden');
+}
+
+function resetPageAndSubmit() {
+    document.getElementById('filter_page').value = 1;
+    document.getElementById('gajiFilterForm').submit();
 }
 </script>
 @endsection

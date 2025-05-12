@@ -28,7 +28,7 @@ class GajiController extends Controller
             'selected' => $selected->format('Y-m'),
             'current' => $current->format('Y-m'),
         ]);
-        $employees = Employee::with('gajis')->paginate(10);
+        $employees = Employee::with('gajis')->paginate(10)->appends($request->except('page'));
 
         // Calculate attendance data for each employee
         $attendanceData = [];

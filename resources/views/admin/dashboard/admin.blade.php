@@ -53,7 +53,13 @@
             <div class="mt-4">
                 <h4 class="text-lg font-semibold text-gray-700 mb-2">Kehadiran Terbaru</h4>
                 <div class="overflow-x-auto">
-                    @include('admin.attendance._table', ['attendances' => $recentAttendances])
+                    @include('admin.attendance._table', [
+                        'employees' => $dashboardEmployees,
+                        'presences' => $dashboardPresences,
+                        'date' => now()->toDateString(),
+                        'status' => null,
+                        'search' => null
+                    ])
                 </div>
             </div>
         </div>
@@ -98,35 +104,54 @@
             </div>
             <div class="mt-2">
                 <h4 class="text-lg font-semibold text-gray-700 mb-2">Gaji Terbaru</h4>
-                @if($recentPayrolls->count() > 0)
-                    <div class="overflow-x-auto">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
+                <div class="overflow-x-auto">
+                    <table class="min-w-full divide-y divide-gray-200">
+                        <thead class="bg-gray-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-64 whitespace-nowrap">Karyawan</th>
+                                <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Periode Gaji</th>
+                                <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Total Gaji</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-gray-200">
+                            @forelse($recentPayrolls as $payroll)
                                 <tr>
-                                    <th class="px-2 py-2 text-left table-header font-medium text-gray-500 uppercase">Karyawan</th>
-                                    <th class="px-2 py-2 text-left table-header font-medium text-gray-500 uppercase">Periode Gaji</th>
-                                    <th class="px-2 py-2 text-left table-header font-medium text-gray-500 uppercase">Total Gaji</th>
+                                    <td class="px-4 py-3 whitespace-nowrap table-cell">
+                                        <div class="flex items-center">
+                                            <div class="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center overflow-hidden">
+                                                @if($payroll->employee->profile_picture)
+                                                    <img src="{{ $payroll->employee->profile_picture }}" alt="Profile Picture" class="object-cover h-10 w-10 rounded-full">
+                                                @else
+                                                    <span class="text-indigo-600 font-medium text-lg">{{ strtoupper(substr($payroll->employee->name, 0, 1)) }}</span>
+                                                @endif
+                                            </div>
+                                            <div class="ml-4">
+                                                <div class="font-medium text-gray-900">{{ $payroll->employee->name }}</div>
+                                                <div class="text-gray-500">{{ $payroll->employee->email }}</div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-3 text-gray-500 table-cell">
+                                        @php
+                                            \Carbon\Carbon::setLocale('id');
+                                            $periode = \Carbon\Carbon::createFromFormat('Y-m', $payroll->periode_bayar);
+                                        @endphp
+                                        {{ $periode->translatedFormat('F Y') }}
+                                    </td>
+                                    <td class="px-4 py-3 font-semibold text-gray-800 table-cell">
+                                        Rp{{ number_format($payroll->gaji_pokok + $payroll->komponen_tambahan - $payroll->potongan, 0, ',', '.') }}
+                                    </td>
                                 </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200">
-                                @foreach($recentPayrolls as $payroll)
-                                    <tr>
-                                        <td class="px-2 py-2 whitespace-nowrap table-cell">
-                                            <div class="font-medium text-gray-900">{{ $payroll->employee->name }}</div>
-                                            <div class="text-gray-500">{{ $payroll->employee->email }}</div>
-                                        </td>
-                                        <td class="px-2 py-2 text-gray-500 table-cell">{{ $payroll->periode_bayar }}</td>
-                                        <td class="px-2 py-2 font-semibold text-gray-800 table-cell">
-                                            Rp{{ number_format($payroll->gaji_pokok + $payroll->komponen_tambahan - $payroll->potongan, 0, ',', '.') }}
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-                @else
-                    <p class="text-gray-500 table-cell">Belum Ada Gaji Terbaru.</p>
-                @endif
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="px-4 py-3 table-cell text-center text-gray-500 whitespace-nowrap">
+                                        Belum ada daftar gaji terbaru.
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <!-- End Manajemen Gaji -->

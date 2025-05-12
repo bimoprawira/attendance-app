@@ -25,8 +25,10 @@
                         <!-- App Name (Logo) Flush Left -->
                         <div class="absolute left-0 top-0 h-full flex items-center" style="padding-left:0;">
                             <a href="{{ Auth::guard('admin')->check() ? route('admin.dashboard') : route('dashboard') }}"
-                               class="text-2xl font-extrabold text-indigo-600 tracking-tight flex items-center gap-2 ml-2 sm:ml-4">
-                                <svg class="w-7 h-7 text-indigo-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="#6366f1"/></svg>
+                               class="text-[1.8rem] font-extrabold text-indigo-600 tracking-tight flex items-center gap-3 ml-2 sm:ml-4">
+                                <span class="inline-block h-10 w-10 rounded-full overflow-hidden bg-white border border-indigo-200 flex items-center justify-center">
+                                    <img src="{{ asset('img/undraw_cat_lqdj.svg') }}" alt="Cat Logo" style="height:2.3rem;width:2.3rem;object-fit:cover;transform:translate(0.1rem, 0.2rem);" />
+                                </span>
                                 ABSEN.IN
                             </a>
                         </div>

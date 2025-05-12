@@ -170,6 +170,12 @@ class DashboardController extends Controller
             return $attendance->updated_at ?? Carbon::now();
         })->values()->take(5);
 
+        // Prepare employees and presences for dashboard table (like attendance page)
+        $dashboardEmployees = $recentAttendances->map(function($presence) {
+            return $presence->employee;
+        });
+        $dashboardPresences = $recentAttendances->keyBy('employee_id');
+
         // ==== Tambahan untuk recentPayrolls ====
         $recentPayrolls = Gaji::with('employee')
             ->orderBy('created_at', 'desc')
@@ -186,7 +192,9 @@ class DashboardController extends Controller
             'pendingLeaves',
             'recentLeaves',
             'recentAttendances',
-            'recentPayrolls' // <-- tambahan disini
+            'recentPayrolls',
+            'dashboardEmployees',
+            'dashboardPresences'
         ));
     }
 }
