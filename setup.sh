@@ -57,6 +57,9 @@ php artisan key:generate
 echo "Running database migrations and seeding..."
 php artisan migrate:fresh --seed
 
+echo "Fetch holidays for the current year..."
+php artisan holidays:fetch 2025
+
 # Install and build frontend assets
 if [ -f package.json ]; then
     echo "Installing NPM dependencies..."
