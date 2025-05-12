@@ -6,19 +6,25 @@ echo "Starting project setup..."
 if [ ! -f .env ]; then
     echo ".env file not found. Creating from .env.example..."
     cp .env.example .env
-    # Set DB and Calendarific values
-    sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
-    sed -i 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' .env
-    sed -i 's/^DB_PORT=.*/DB_PORT=3306/' .env
-    sed -i 's/^DB_DATABASE=.*/DB_DATABASE=presence_db/' .env
-    sed -i 's/^DB_USERNAME=.*/DB_USERNAME=root/' .env
-    sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=/' .env
-    # Add Calendarific API key if not present
+    # Remove any existing DB settings (commented or not)
+    sed -i '/^#\?DB_CONNECTION=/d' .env
+    sed -i '/^#\?DB_HOST=/d' .env
+    sed -i '/^#\?DB_PORT=/d' .env
+    sed -i '/^#\?DB_DATABASE=/d' .env
+    sed -i '/^#\?DB_USERNAME=/d' .env
+    sed -i '/^#\?DB_PASSWORD=/d' .env
+    # Add correct DB settings at the end
+    echo "DB_CONNECTION=mysql" >> .env
+    echo "DB_HOST=127.0.0.1" >> .env
+    echo "DB_PORT=3306" >> .env
+    echo "DB_DATABASE=presence_db" >> .env
+    echo "DB_USERNAME=root" >> .env
+    echo "DB_PASSWORD=" >> .env
+    # Add CALENDARIFIC_API_KEY if not present
     if ! grep -q '^CALENDARIFIC_API_KEY=' .env; then
-        echo 'CALENDARIFIC_API_KEY=DdWErgLjhp0rQuirOwOGMGSQ5oF6Xgiv' >> .env
-    else
-        sed -i 's/^CALENDARIFIC_API_KEY=.*/CALENDARIFIC_API_KEY=DdWErgLjhp0rQuirOwOGMGSQ5oF6Xgiv/' .env
+        echo -e "\nCALENDARIFIC_API_KEY=DdWErgLjhp0rQuirOwOGMGSQ5oF6Xgiv" >> .env
     fi
+    echo ".env file created and configured."
 fi
 
 # Check PHP version
