@@ -2,6 +2,25 @@
 
 echo "Starting project setup..."
 
+# Create .env from .env.example if it doesn't exist
+if [ ! -f .env ]; then
+    echo ".env file not found. Creating from .env.example..."
+    cp .env.example .env
+    # Set DB and Calendarific values
+    sed -i 's/^DB_CONNECTION=.*/DB_CONNECTION=mysql/' .env
+    sed -i 's/^DB_HOST=.*/DB_HOST=127.0.0.1/' .env
+    sed -i 's/^DB_PORT=.*/DB_PORT=3306/' .env
+    sed -i 's/^DB_DATABASE=.*/DB_DATABASE=presence_db/' .env
+    sed -i 's/^DB_USERNAME=.*/DB_USERNAME=root/' .env
+    sed -i 's/^DB_PASSWORD=.*/DB_PASSWORD=/' .env
+    # Add Calendarific API key if not present
+    if ! grep -q '^CALENDARIFIC_API_KEY=' .env; then
+        echo 'CALENDARIFIC_API_KEY=DdWErgLjhp0rQuirOwOGMGSQ5oF6Xgiv' >> .env
+    else
+        sed -i 's/^CALENDARIFIC_API_KEY=.*/CALENDARIFIC_API_KEY=DdWErgLjhp0rQuirOwOGMGSQ5oF6Xgiv/' .env
+    fi
+fi
+
 # Check PHP version
 echo "Checking PHP version..."
 php_version=$(php -r "echo PHP_VERSION_ID;")
