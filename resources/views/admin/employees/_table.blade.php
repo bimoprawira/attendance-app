@@ -2,7 +2,7 @@
     <thead class="bg-gray-50">
         <tr>
             <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-64 whitespace-nowrap">Info Karyawan</th>
-            <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Jabatan</th>
+            <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-56 whitespace-nowrap">Jabatan</th>
             <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Kuota Cuti</th>
             <th class="px-4 py-3 text-left table-header font-medium text-gray-500 uppercase tracking-wider w-32 whitespace-nowrap">Aksi</th>
         </tr>
@@ -23,7 +23,7 @@
                 </div>
             </td>
             <td class="px-4 py-3 table-cell">
-                <span class="px-3 py-1 text-base text-indigo-600 bg-indigo-100 rounded-full">
+                <span class="px-3 py-1 text-base text-indigo-600 bg-indigo-100 rounded-full whitespace-nowrap">
                     {{ $employee->position }}
                 </span>
             </td>
@@ -81,5 +81,7 @@
         @endforeach
     </tbody>
 </table>
-<div class="mt-8">
+{{-- Remove this duplicate pagination --}}
+{{-- <div class="mt-8">
     {{ $employees->links() }} 
+</div> --}} 

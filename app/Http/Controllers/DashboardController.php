@@ -32,6 +32,8 @@ class DashboardController extends Controller
     public function adminDashboard()
     {
         $today = Carbon::today();
+        // Ensure libur presences for holidays/weekends
+        \App\Models\Presence::ensureLiburPresences($today);
         $now = Carbon::now();
         $lateTime = Carbon::createFromTimeString(env('ATTENDANCE_LATE_BEFORE', '10:00'));
         $isPastLateThreshold = $now->gt($lateTime);

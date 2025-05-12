@@ -36,12 +36,15 @@
                 <td class="px-4 py-3 text-gray-500 table-cell">{{ $attendance->check_out ? $attendance->check_out->format('H:i') : '-' }}</td>
                 <td class="px-4 py-3 table-cell">
                     <span class="px-2 inline-flex text-base leading-6 font-semibold rounded-full
-                        @if($attendance->status === 'present') bg-green-100 text-green-800
+                        @if($attendance->status === 'libur') bg-blue-100 text-blue-800
+                        @elseif($attendance->status === 'present') bg-green-100 text-green-800
                         @elseif($attendance->status === 'late') bg-yellow-100 text-yellow-800
                         @elseif($attendance->status === 'on_leave' || (isset($attendance->is_on_leave) && $attendance->is_on_leave)) bg-purple-100 text-purple-800
                         @elseif($attendance->status === 'not_checked_in') bg-gray-100 text-gray-800
                         @else bg-red-100 text-red-800 @endif">
-                        @if($attendance->status === 'on_leave' || (isset($attendance->is_on_leave) && $attendance->is_on_leave))
+                        @if($attendance->status === 'libur')
+                            Libur
+                        @elseif($attendance->status === 'on_leave' || (isset($attendance->is_on_leave) && $attendance->is_on_leave))
                             Cuti
                         @elseif($attendance->status === 'not_checked_in')
                             Belum Presensi

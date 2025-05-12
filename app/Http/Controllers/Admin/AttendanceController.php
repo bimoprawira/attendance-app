@@ -20,6 +20,11 @@ class AttendanceController extends Controller
         $lateTime = Carbon::createFromTimeString(env('ATTENDANCE_LATE_BEFORE', '10:00'));
         $isPastLateThreshold = $now->gt($lateTime);
         
+        // Ensure libur presences for holidays/weekends ONLY for today
+        if ($date->isToday()) {
+            \App\Models\Presence::ensureLiburPresences($date);
+        }
+        
         // Reset any 'absent' status to 'not_checked_in' if it's today and before threshold
         if ($date->isToday() && !$isPastLateThreshold) {
             Presence::whereDate('date', $date)
@@ -33,7 +38,7 @@ class AttendanceController extends Controller
                 'attendances' => new \Illuminate\Pagination\LengthAwarePaginator(
                     collect(),
                     0,
-                    15,
+                    10,
                     1,
                     ['path' => request()->url(), 'query' => request()->query()]
                 )
@@ -94,37 +99,53 @@ class AttendanceController extends Controller
         
         // Handle remaining employees based on date
         if ($date->isToday()) {
+            // Check if today is a holiday or weekend
+            $isHoliday = false;
+            $holidayName = null;
+            if (class_exists('App\\Models\\Holiday')) {
+                $holiday = \App\Models\Holiday::getHoliday($date);
+                $isHoliday = $date->isWeekend() || $holiday;
+                $holidayName = $holiday ? $holiday->name : null;
+            } else {
+                $isHoliday = $date->isWeekend();
+            }
             foreach ($employees as $employee) {
-                if (!in_array($employee->employee_id, $processedEmployees)) {
-                    // Create and save the presence record
+                if ($isHoliday) {
+                    // Only push if not already processed (avoid duplicate in collection)
+                    if (!in_array($employee->employee_id, $processedEmployees)) {
+                        $attendance = Presence::where('employee_id', $employee->employee_id)
+                            ->whereDate('date', $date)
+                            ->first();
+                        if ($attendance) {
+                            $attendance->employee = $employee;
+                            $attendances->push($attendance);
+                            $processedEmployees[] = $employee->employee_id;
+                        }
+                    }
+                } else if (!in_array($employee->employee_id, $processedEmployees)) {
                     $attendance = Presence::create([
                         'employee_id' => $employee->employee_id,
                         'date' => $date,
-                        'status' => 'not_checked_in', // Always start as not_checked_in
+                        'status' => 'not_checked_in',
                         'check_in' => null,
                         'check_out' => null
                     ]);
-                    
                     // If it's past late threshold, update to absent
                     if ($isPastLateThreshold) {
                         $attendance->status = 'absent';
                         $attendance->save();
                     }
-                    
                     $attendance->employee = $employee;
                     $attendances->push($attendance);
+                    $processedEmployees[] = $employee->employee_id;
                 }
             }
         } else if ($date->isBefore($today)) {
-            // For past dates, only show existing records and actual absences
+            // For past dates, only show existing records and actual absences (do not create or show 'libur' unless already exists)
             $existingRecords = $attendances->pluck('employee_id')->toArray();
-            
-            // Get employees who were already employed at that date
             $employeesAtDate = $employees->filter(function($employee) use ($date) {
                 return Carbon::parse($employee->date_joined)->lte($date);
             });
-            
-            // Add absent records only for employees who were employed but have no record
             foreach ($employeesAtDate as $employee) {
                 if (!in_array($employee->employee_id, $existingRecords)) {
                     $attendance = new Presence();
@@ -167,7 +188,7 @@ class AttendanceController extends Controller
         
         // Convert to paginator
         $page = $request->get('page', 1);
-        $perPage = 15;
+        $perPage = 10;
         $items = $attendances->forPage($page, $perPage);
         $attendances = new \Illuminate\Pagination\LengthAwarePaginator(
             $items,
@@ -188,6 +209,10 @@ class AttendanceController extends Controller
         $now = Carbon::now();
         $lateTime = Carbon::createFromTimeString(env('ATTENDANCE_LATE_BEFORE', '10:00'));
         $isPastLateThreshold = $now->gt($lateTime);
+        // Ensure libur presences for holidays/weekends ONLY for today
+        if ($date->isToday()) {
+            \App\Models\Presence::ensureLiburPresences($date);
+        }
         if ($date->isToday() && !$isPastLateThreshold) {
             Presence::whereDate('date', $date)
                 ->where('status', 'absent')
@@ -195,7 +220,7 @@ class AttendanceController extends Controller
         }
         if ($date->isAfter($today)) {
             $attendances = new \Illuminate\Pagination\LengthAwarePaginator(
-                collect(), 0, 15, 1,
+                collect(), 0, 10, 1,
                 ['path' => request()->url(), 'query' => request()->query()]
             );
             return view('admin.attendance._table', compact('attendances'))->render();
@@ -238,8 +263,30 @@ class AttendanceController extends Controller
             }
         }
         if ($date->isToday()) {
+            // Check if today is a holiday or weekend
+            $isHoliday = false;
+            $holidayName = null;
+            if (class_exists('App\\Models\\Holiday')) {
+                $holiday = \App\Models\Holiday::getHoliday($date);
+                $isHoliday = $date->isWeekend() || $holiday;
+                $holidayName = $holiday ? $holiday->name : null;
+            } else {
+                $isHoliday = $date->isWeekend();
+            }
             foreach ($employees as $employee) {
-                if (!in_array($employee->employee_id, $processedEmployees)) {
+                if ($isHoliday) {
+                    // Only push if not already processed (avoid duplicate in collection)
+                    if (!in_array($employee->employee_id, $processedEmployees)) {
+                        $attendance = Presence::where('employee_id', $employee->employee_id)
+                            ->whereDate('date', $date)
+                            ->first();
+                        if ($attendance) {
+                            $attendance->employee = $employee;
+                            $attendances->push($attendance);
+                            $processedEmployees[] = $employee->employee_id;
+                        }
+                    }
+                } else if (!in_array($employee->employee_id, $processedEmployees)) {
                     $attendance = Presence::create([
                         'employee_id' => $employee->employee_id,
                         'date' => $date,
@@ -247,12 +294,14 @@ class AttendanceController extends Controller
                         'check_in' => null,
                         'check_out' => null
                     ]);
+                    // If it's past late threshold, update to absent
                     if ($isPastLateThreshold) {
                         $attendance->status = 'absent';
                         $attendance->save();
                     }
                     $attendance->employee = $employee;
                     $attendances->push($attendance);
+                    $processedEmployees[] = $employee->employee_id;
                 }
             }
         } else if ($date->isBefore($today)) {
@@ -294,7 +343,7 @@ class AttendanceController extends Controller
             return $attendance->updated_at ?? Carbon::now();
         })->values();
         $page = $request->get('page', 1);
-        $perPage = 15;
+        $perPage = 10;
         $items = $attendances->forPage($page, $perPage);
         $attendances = new \Illuminate\Pagination\LengthAwarePaginator(
             $items,

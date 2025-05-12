@@ -38,7 +38,8 @@
                                 <td class="px-4 py-3 text-gray-500 table-cell">{{ optional($presence->check_out)->format('H:i') ?? '-' }}</td>
                                 <td class="px-4 py-3 table-cell">
                                     <span class="px-2 inline-flex text-base leading-6 font-semibold rounded-full
-                                        @if($presence->status === 'present') bg-green-100 text-green-800
+                                        @if($presence->status === 'libur') bg-blue-100 text-blue-800
+                                        @elseif($presence->status === 'present') bg-green-100 text-green-800
                                         @elseif($presence->status === 'late') bg-yellow-100 text-yellow-800
                                         @elseif($presence->status === 'on_leave') bg-purple-100 text-purple-800
                                         @elseif($presence->status === 'not_checked_in') bg-gray-100 text-gray-800
@@ -53,6 +54,8 @@
                                             Terlambat
                                         @elseif($presence->status === 'absent')
                                             Tidak Hadir
+                                        @elseif($presence->status === 'libur')
+                                            Libur
                                         @else
                                             {{ ucfirst($presence->status) }}
                                         @endif

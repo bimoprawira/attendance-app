@@ -7,6 +7,7 @@ use App\Models\Presence;
 use App\Models\Leave;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Holiday;
 
 class PresenceController extends Controller
 {
@@ -24,6 +25,22 @@ class PresenceController extends Controller
         return env('ATTENDANCE_LATE_BEFORE', self::LATE_BEFORE);
     }
 
+    protected function isHolidayOrWeekend(Carbon $date)
+    {
+        // Check if it's weekend (Saturday = 6, Sunday = 0)
+        if ($date->dayOfWeek === 0 || $date->dayOfWeek === 6) {
+            return [true, 'Weekend - ' . $date->format('l')];
+        }
+
+        // Check if it's a holiday
+        $holiday = Holiday::getHoliday($date);
+        if ($holiday) {
+            return [true, $holiday->name];
+        }
+
+        return [false, null];
+    }
+
     protected function ensureTodayRecord()
     {
         $employee = Auth::user();
@@ -34,6 +51,30 @@ class PresenceController extends Controller
         $presence = Presence::where('employee_id', $employee->employee_id)
             ->whereDate('date', $today)
             ->first();
+
+        // Check if it's a holiday or weekend
+        [$isHoliday, $holidayName] = $this->isHolidayOrWeekend($today);
+
+        if ($isHoliday) {
+            if (!$presence) {
+                // Create new record with 'libur' status
+                $presence = Presence::create([
+                    'employee_id' => $employee->employee_id,
+                    'date' => $today,
+                    'status' => 'libur',
+                    'check_in' => null,
+                    'check_out' => null
+                ]);
+            } else {
+                // Update existing record to 'libur' status
+                $presence->update([
+                    'status' => 'libur',
+                    'check_in' => null,
+                    'check_out' => null
+                ]);
+            }
+            return $presence;
+        }
 
         if (!$presence) {
             // Check if employee is on leave
@@ -83,11 +124,15 @@ class PresenceController extends Controller
         $today = Carbon::today();
         $now = Carbon::now();
         
+        // Get holiday information first
+        [$isHoliday, $holidayName] = $this->isHolidayOrWeekend($today);
+        
         // Get or create today's record
         $presence = $this->ensureTodayRecord();
 
-        // Update status to absent if past late threshold and not checked in
-        if (!$presence->check_in && 
+        // Only update to absent if it's not a holiday
+        if (!$isHoliday && 
+            !$presence->check_in && 
             $presence->status === 'not_checked_in' && 
             $now->format('H:i') > $this->getLateBeforeTime()) {
             $presence->update(['status' => 'absent']);
@@ -104,7 +149,9 @@ class PresenceController extends Controller
             'now' => $now->format('H:i'),
             'presentBefore' => $this->getPresentBeforeTime(),
             'lateBefore' => $this->getLateBeforeTime(),
-            'formOpenTime' => $formOpenTime
+            'formOpenTime' => $formOpenTime,
+            'isHoliday' => $isHoliday,
+            'holidayName' => $holidayName
         ]);
     }
 
@@ -117,6 +164,12 @@ class PresenceController extends Controller
 
         $now = Carbon::now();
         $today = Carbon::today();
+
+        // Check if it's a holiday
+        [$isHoliday, $holidayName] = $this->isHolidayOrWeekend($today);
+        if ($isHoliday) {
+            return back()->with('error', "Hari ini adalah hari libur ($holidayName). Tidak perlu presensi.");
+        }
 
         // Get or create today's record
         $presence = $this->ensureTodayRecord();

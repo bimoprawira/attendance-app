@@ -13,13 +13,16 @@
 </style>
 <div class="flex justify-center items-start min-h-screen py-8">
     <div class="w-full max-w-7xl bg-white/90 rounded-3xl shadow-2xl p-10">
-        <div class="flex justify-between items-center mb-8">
+        <div class="mb-8">
             <h2 class="section-title font-bold text-indigo-700">Manajemen Gaji</h2>
-            <form method="GET" class="flex items-center space-x-2">
-                <label for="filter_month" class="text-base font-medium text-gray-700">Bulan:</label>
-                <input type="month" id="filter_month" name="month" value="{{ $month }}" class="rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base" onchange="this.form.submit()">
-            </form>
         </div>
+        <div class="flex gap-2 mb-4">
+            <div class="w-72 bg-white rounded-xl shadow-lg p-4">
+                <label for="filter_month" class="block text-base font-medium text-gray-700 mb-2">Periode</label>
+                <input type="month" id="filter_month" name="month" value="{{ $month }}" class="w-full rounded-xl border-gray-300 shadow-sm bg-gray-50 focus:border-indigo-500 focus:ring-indigo-500 p-2 text-base" onchange="this.form.submit()" form="gajiFilterForm">
+            </div>
+        </div>
+        <form id="gajiFilterForm" method="GET" class="hidden"></form>
 
         @if(session('success'))
             <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
@@ -27,6 +30,9 @@
             </div>
         @endif
 
+        @if($employees->isEmpty())
+            {{-- No message or content if empty --}}
+        @else
         <div class="bg-white shadow-lg rounded-2xl p-8">
             <div class="overflow-x-auto">
                 <table class="min-w-full divide-y divide-gray-200">
@@ -41,13 +47,23 @@
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach($employees as $employee)
                             @php
-                                $hasAttendance = isset($attendanceData[$employee->employee_id]) && $attendanceData[$employee->employee_id]['days_worked'] > 0;
-                                // Check if slip for this month already exists
+                                $defaultData = [
+                                    'hadir' => 0,
+                                    'telat' => 0,
+                                    'absen' => 0,
+                                    'on_leave' => 0,
+                                    'libur' => 0,
+                                    'not_checked_in' => 0,
+                                    'days_worked' => 0,
+                                    'absent_days' => 0,
+                                    'workdays' => 0,
+                                    'total_days' => 0,
+                                ];
+                                $data = array_merge($defaultData, $attendanceData[$employee->employee_id] ?? []);
                                 $currentMonthSlip = $employee->gajis->first(function($gaji) use ($month) {
                                     return $gaji->periode_bayar === $month;
                                 });
                             @endphp
-                            @if($hasAttendance)
                             <tr class="hover:bg-gray-50">
                                 <td class="px-4 py-3 table-cell">
                                     <div class="flex items-center">
@@ -77,7 +93,7 @@
                                 <td class="px-4 py-3 table-cell">
                                     <div class="flex space-x-2">
                                         @if(!$currentMonthSlip)
-                                        <button onclick="openSlipGajiModal({{ $employee->employee_id }}, '{{ $employee->name }}', {{ $employee->gaji_pokok }})"
+                                        <button onclick="openSlipGajiModal({{ $employee->employee_id }}, '{{ $employee->name }}', {{ $employee->gaji_pokok }}, {{ $data['workdays'] }}, {{ $data['absent_days'] }}, {{ $data['hadir'] }}, {{ $data['telat'] }}, {{ $data['absen'] }})"
                                             class="px-4 py-1.5 bg-blue-100 text-blue-600 hover:bg-blue-200 rounded-lg font-medium transition duration-150 ease-in-out">
                                             Kelola Slip
                                         </button>
@@ -85,12 +101,15 @@
                                     </div>
                                 </td>
                             </tr>
-                            @endif
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
+        <div class="mt-8">
+            {{ $employees->links() }}
+        </div>
+        @endif
     </div>
 </div>
 
@@ -154,21 +173,15 @@
 </div>
 
 <script>
-function openSlipGajiModal(employeeId, employeeName, gajiPokok) {
+function openSlipGajiModal(employeeId, employeeName, gajiPokok, workdays, absentDays, hadir, telat, absen) {
     document.getElementById('slipGajiModal').classList.remove('hidden');
     document.getElementById('slip_employee_id').value = employeeId;
     document.getElementById('slip_employee_name').textContent = employeeName;
     document.getElementById('slip_gaji_pokok').textContent = parseInt(gajiPokok).toLocaleString('id-ID');
-    // Get attendance data from backend
-    const attendanceData = @json($attendanceData);
-    let daysWorked = attendanceData[employeeId] ? attendanceData[employeeId].days_worked : 0;
-    let absentDays = attendanceData[employeeId] ? attendanceData[employeeId].absent_days : 0;
-    let hadir = attendanceData[employeeId] ? (attendanceData[employeeId].hadir || 0) : 0;
-    let telat = attendanceData[employeeId] ? (attendanceData[employeeId].telat || 0) : 0;
-    let absen = attendanceData[employeeId] ? (attendanceData[employeeId].absen || 0) : 0;
+    // Use passed attendance data
     let potongan = 0;
-    if (daysWorked > 0) {
-        potongan = Math.round((gajiPokok / daysWorked) * absentDays);
+    if (workdays > 0) {
+        potongan = Math.round((gajiPokok / workdays) * absentDays);
     }
     document.getElementById('slip_potongan').value = potongan;
     document.getElementById('komponen_tambahan').value = 0;

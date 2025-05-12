@@ -72,7 +72,7 @@
                     <h2 class="text-lg font-semibold text-green-700">Penggajian</h2>
                 </div>
                 <a href="{{ route('gaji.index') }}" class="w-full bg-green-600 hover:bg-green-700 text-white text-center py-2 rounded mb-2 font-medium transition">Lihat Riwayat Gaji</a>
-                <a href="{{ route('gaji.export') }}" class="w-full bg-green-100 hover:bg-green-200 text-green-700 text-center py-2 rounded font-medium transition">Unduh Riwayat Gaji (Excel)</a>
+                <button type="button" onclick="redirectToLatestSlip()" class="w-full bg-green-100 hover:bg-green-200 text-green-700 text-center py-2 rounded font-medium transition">Print Slip Gaji</button>
             </div>
         </div>
     </div>
@@ -287,6 +287,21 @@
         document.getElementById('leaveReason').textContent = reason;
         getStatusIcon(status);
         document.getElementById('leaveDetailsModal').classList.remove('hidden');
+    }
+
+    function redirectToLatestSlip() {
+        fetch('/employee/gaji/latest-id')
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.id) {
+                    window.location.href = `/employee/gaji/${data.id}/print`;
+                } else {
+                    window.location.href = '/employee/gaji';
+                }
+            })
+            .catch(() => {
+                window.location.href = '/employee/gaji';
+            });
     }
 
     // Modal event listeners

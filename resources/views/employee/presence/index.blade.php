@@ -28,6 +28,12 @@
             </div>
         @endif
 
+        @if (isset($isHoliday) && $isHoliday)
+            <div class="bg-blue-100 border border-blue-400 text-blue-700 px-4 py-3 rounded-lg mb-4">
+                <span class="block sm:inline">Hari ini adalah hari libur: {{ $holidayName }}</span>
+            </div>
+        @endif
+
         <!-- Aturan Kehadiran -->
         <div class="bg-white rounded-2xl shadow-lg mb-8 border border-gray-200">
             <div class="border-b border-gray-200 bg-gray-50 px-6 py-4 rounded-t-2xl">
@@ -89,6 +95,8 @@
                                 <span class="text-red-600">Tidak Hadir</span>
                             @elseif($status === 'on_leave')
                                 <span class="text-purple-600">Cuti</span>
+                            @elseif($status === 'libur')
+                                <span class="text-blue-600">Libur</span>
                             @else
                                 @if(now()->format('H:i') > $lateBefore)
                                     <span class="text-red-600">Tidak Hadir</span>
@@ -118,6 +126,8 @@
                         @endphp
                         @if($status === 'on_leave')
                             <span class="text-blue-500 italic">Anda sedang cuti hari ini.</span>
+                        @elseif($status === 'libur')
+                            <span class="text-blue-500 italic">Hari ini adalah hari libur. Tidak perlu presensi.</span>
                         @elseif($status === 'absent')
                             <span class="text-red-500 italic">Presensi tidak tersedia lagi. Anda ditandai sebagai tidak hadir hari ini.</span>
                         @elseif($isPastLateThreshold && !$presence->check_in)
