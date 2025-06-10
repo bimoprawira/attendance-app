@@ -2,7 +2,7 @@
     "version": 2,
     "framework": null,
     "functions": {
-        "api/index.php": { "runtime": "vercel-php@0.6.0" }
+        "api/index.php": { "runtime": "vercel-php@0.6.0"}
     },
     "routes": [
         { "src": "/build/assets/(.*)", "dest": "/public/build/assets/$1" },
@@ -40,10 +40,10 @@
         "SESSION_DRIVER": "cookie",
 
         "DB_CONNECTION": "mysql",
-        "DB_HOST": "jbwin.h.filess.io",
-        "DB_PORT": "3307",
-        "DB_DATABASE": "managementhr_poolthank",
-        "DB_USERNAME": "managementhr_poolthank",
-        "DB_PASSWORD": "1519851a9613b654112ffa3bc9a6758f2e1d422b"
+        "DB_HOST": "tilmt.h.filess.io",
+        "DB_PORT": "61002",
+        "DB_DATABASE": "bimo_doubtlayof",
+        "DB_USERNAME": "bimo_doubtlayof",
+        "DB_PASSWORD": "f3f70981ab1e7235e43b765220e181bf22eba1cb"
     }
 }
