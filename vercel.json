@@ -40,10 +40,10 @@
         "SESSION_DRIVER": "cookie",
 
         "DB_CONNECTION": "mysql",
-        "DB_HOST": "zzddu.h.filess.io",
-        "DB_PORT": "61002",
-        "DB_DATABASE": "managementpresensi_correctly",
-        "DB_USERNAME": "managementpresensi_correctly",
-        "DB_PASSWORD": "5e89048d370026c164b24cdf436a8d3fd642affc"
+        "DB_HOST": "jbwin.h.filess.io",
+        "DB_PORT": "3307",
+        "DB_DATABASE": "managementhr_poolthank",
+        "DB_USERNAME": "managementhr_poolthank",
+        "DB_PASSWORD": "1519851a9613b654112ffa3bc9a6758f2e1d422b"
     }
 }

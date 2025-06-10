@@ -57,10 +57,9 @@ class Employee extends Authenticatable
         $usedField = "used_{$type}_leave";
         return $this->$quotaField - $this->$usedField;
     }
-    
+
     public function gajis()
     {
-        return $this->hasMany(Gaji::class, 'employee_id', 'employee_id');
+        return $this->hasMany(Gaji::class, 'employee_id');
     }
-
-} 
+}

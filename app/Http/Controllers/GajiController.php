@@ -6,36 +6,43 @@ use App\Models\Employee;
 use App\Models\Gaji;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class GajiController extends Controller
 {
     public function index(Request $request)
     {
-        $month = $request->input('month', now()->format('Y-m'));
-        $start = \Carbon\Carbon::createFromFormat('Y-m', $month)->startOfMonth();
-        $end = (clone $start)->endOfMonth();
+        // ─────────────────────────────────────────────────────────────
+        //  A. Ambil parameter bulan   (default = bulan berjalan)
+        // ─────────────────────────────────────────────────────────────
+        $month = $request->input('month', now()->format('Y-m'));      // ex: 2025-06
+        $start = Carbon::createFromFormat('Y-m', $month)->startOfMonth();
+        $end   = $start->clone()->endOfMonth();
 
-        $employees = Employee::with(['gajis' => function ($query) {
-            $query->latest();
-        }])->get();
+        // ─────────────────────────────────────────────────────────────
+        //  B. Ambil karyawan + slip gaji bulan tsb, PAGINASI
+        // ─────────────────────────────────────────────────────────────
+        $employees = Employee::with(['gajis' => fn ($q) => $q->where('periode_bayar', $month)])
+            ->paginate(10)            // <<– ganti get() → paginate()
+            ->withQueryString();      // supaya ?month= ikut saat pindah halaman
 
-        // For each employee, calculate days_worked and absent_days for the selected month
+        // ─────────────────────────────────────────────────────────────
+        //  C. Hitung data presensi per karyawan
+        // ─────────────────────────────────────────────────────────────
         $attendanceData = [];
+
         foreach ($employees as $employee) {
             $presences = $employee->presences()
-                ->whereBetween('date', [$start->toDateString(), $end->toDateString()])
+                ->whereBetween('date', [$start, $end])
                 ->get();
-            $days_worked = $presences->whereIn('status', ['present', 'late', 'absent', 'not_checked_in'])->count();
-            $absent_days = $presences->where('status', 'absent')->count();
-            $hadir = $presences->where('status', 'present')->count();
-            $telat = $presences->where('status', 'late')->count();
-            $absen = $presences->where('status', 'absent')->count();
+
             $attendanceData[$employee->employee_id] = [
-                'days_worked' => $days_worked,
-                'absent_days' => $absent_days,
-                'hadir' => $hadir,
-                'telat' => $telat,
-                'absen' => $absen,
+                'days_worked'  => $presences->whereIn('status', ['present', 'late', 'not_checked_in'])->count(),
+                'absent_days'  => $presences->where('status', 'absent')->count(),
+                'hadir'        => $presences->where('status', 'present')->count(),
+                'telat'        => $presences->where('status', 'late')->count(),
+                'absen'        => $presences->where('status', 'absent')->count(),
+                'workdays'     => $start->diffInWeekdays($end) + 1,   // contoh hitung 5 × minggu
             ];
         }
 
@@ -52,7 +59,7 @@ class GajiController extends Controller
 
         $gaji = Gaji::create([
             'employee_id' => $employee->employee_id,
-            'periode_bayar' => $request->periode_bayar,
+            'periode_bayar' => Carbon::parse($request->periode_bayar)->format('Y-m'),
             'gaji_pokok' => $employee->gaji_pokok,
             'komponen_tambahan' => $request->komponen_tambahan ?? 0,
             'potongan' => $request->potongan ?? 0,
