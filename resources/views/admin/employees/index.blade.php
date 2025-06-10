@@ -295,6 +295,7 @@ if (addEmployeeForm) {
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value
             },
+            referrerPolicy: 'unsafe-url',
             body: formData
         })
         .then(async res => {
