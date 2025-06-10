@@ -319,14 +319,16 @@ if (editEmployeeForm) {
         const form = e.target;
         const url = form.action;
         const formData = new FormData(form);
-        fetch(url, {
+        fetch('https://URL', {
             method: 'POST',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
                 'X-CSRF-TOKEN': form.querySelector('input[name="_token"]').value
             },
+            referrerPolicy: 'unsafe-url',
             body: formData
-        })
+        });
+
         .then(async res => {
             if (res.status === 422) {
                 const data = await res.json();
