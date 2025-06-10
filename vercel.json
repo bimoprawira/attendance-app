@@ -2,7 +2,8 @@
     "version": 2,
     "functions": {
         "api/index.php": {
-            "runtime": "vercel-php@0.6.0"
+            "runtime": "vercel-php@0.7.0",
+            "phpVersion": "8.2"
         }
     },
     "routes": [
@@ -27,7 +28,8 @@
         "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "LOG_CHANNEL": "stderr",
-        "SESSION_DRIVER": "cookie"
+        "SESSION_DRIVER": "cookie",
+        "LD_LIBRARY_PATH": "/var/task/lib:/usr/lib64"
     },
     "outputDirectory": "public"
 }
