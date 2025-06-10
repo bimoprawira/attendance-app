@@ -12,7 +12,10 @@
         { "src": "/(css|js|images)/(.*)", "dest": "/public/$1/$2" },
         { "src": "/css/(.*)", "dest": "/public/css/$1" },
         { "src": "/js/(.*)", "dest": "/public/js/$1" },
-        { "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg))", "dest": "/public/$1" },
+        {
+            "src": "/(.*\\.(js|css|png|jpg|jpeg|gif|ico|svg))",
+            "dest": "/public/$1"
+        },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
     "public": true,
@@ -20,7 +23,7 @@
     "buildCommand": "npm run build",
     "outputDirectory": "public",
     "env": {
-        "APP_KEY": "base64:XTYdH1oUjD5FhBg/oZa0UKGI0R6rXRLdJjtQSEJN3yU=",
+        "APP_KEY": "base64:0GXophW74Jn4KDNbx5g+YvjvkJL5l3aGkbj2ymm87P0=",
         "APP_ENV": "production",
         "APP_DEBUG": "false",
         "APP_URL": "management-presensi.vercel.app",
@@ -38,7 +41,6 @@
         "DB_CONNECTION": "mysql",
         "DB_HOST": "zzddu.h.filess.io",
         "DB_PORT": "61002",
-        "DB_DATABASE": "management-presensi",
-        "DB_USERNAME": "bimopd30"
+        "DB_DATABASE": "management-presensi-vercel"
     }
 }
