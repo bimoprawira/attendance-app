@@ -42,6 +42,7 @@
         "DB_HOST": "zzddu.h.filess.io",
         "DB_PORT": "61002",
         "DB_DATABASE": "managementpresensi_correctly",
-        "DB_USERNAME": "managementpresensi_correctly"
+        "DB_USERNAME": "managementpresensi_correctly",
+        "DB_PASSWORD": "5e89048d370026c164b24cdf436a8d3fd642affc"
     }
 }
